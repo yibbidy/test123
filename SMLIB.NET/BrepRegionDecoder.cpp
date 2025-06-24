@@ -14,19 +14,19 @@ namespace PESMLIB
    {
    }
 
-   System::Object __gc * BrepRegionDecoder::Decode (Selection __gc *selection, int index)
+   System::Object^  BrepRegionDecoder::Decode (Selection^ selection, int index)
    {
-      BrepRegionProxy __gc *proxyObj = NULL;
+      BrepRegionProxy^ proxyObj = NULL;
 
       if (_selectionMap != System::Type::Missing)
       {
          System::Object *obj = _selectionMap->GetGeometry (selection->GeomSeg);
          if (obj != System::Type::Missing)
          {
-            Brep __gc *pBrep = dynamic_cast<Brep __gc *> (obj);
+            Brep^ pBrep = dynamic_cast<Brep^ > (obj);
             if (NULL != pBrep)
             {
-               System::Collections::ArrayList __gc *arrRegions = 
+               System::Collections::ArrayList^ arrRegions = 
                   pBrep->GetRegionsFromFace (selection->Geom);
                if (arrRegions->Count > 0)
 			   {

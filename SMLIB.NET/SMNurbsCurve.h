@@ -7,7 +7,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace PESMLIB
 {
-	__gc public class NurbsCurve :	public SMObject
+	public ref class NurbsCurve :	public SMObject
 	{
 	public:
 		NurbsCurve();
@@ -18,16 +18,16 @@ namespace PESMLIB
 		virtual void Undraw ();
 
       // Object Overridables
-		bool Equals (System::Object __gc *obj);
+		bool Equals (System::Object^ obj);
 
       // IComparable interface
-		int CompareTo (System::Object __gc *);
+		int CompareTo (System::Object^ );
 
 	  void ReverseParameterization ();
-      Extent1d __gc * GetNaturalInterval ();
-      void Tessellate(Extent1d __gc *extInterval, double dChordHeightTolerance, double dAngleToleranceDeg,
-         ULONG lMinimumNumberOfSegments, System::Collections::ArrayList __gc *parameters,
-         System::Collections::ArrayList __gc * points);
+      Extent1d^  GetNaturalInterval ();
+      void Tessellate(Extent1d^ extInterval, double dChordHeightTolerance, double dAngleToleranceDeg,
+         ULONG lMinimumNumberOfSegments, System::Collections::ArrayList^ parameters,
+         System::Collections::ArrayList^  points);
 
 	public private:
 		virtual void AttachIwObj (Context *pContext, IwObject *);

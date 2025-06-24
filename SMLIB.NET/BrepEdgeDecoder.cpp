@@ -14,18 +14,18 @@ namespace PESMLIB
 	{
 	}
 
-	System::Object __gc * BrepEdgeDecoder::Decode (Selection __gc *selection, int index)
+	System::Object^  BrepEdgeDecoder::Decode (Selection^ selection, int index)
 	{
-		BrepEdgeProxy __gc *proxyObj = NULL;
+		BrepEdgeProxy^ proxyObj = NULL;
 
 		try
 		{
 			if (_selectionMap != System::Type::Missing)
 			{
-				System::Object __gc *obj = _selectionMap->GetGeometry (selection->GeomSeg);
+				System::Object^ obj = _selectionMap->GetGeometry (selection->GeomSeg);
 				if (obj != System::Type::Missing)
 				{
-				Brep __gc *pBrep = dynamic_cast<Brep __gc *> (obj);
+				Brep^ pBrep = dynamic_cast<Brep^ > (obj);
 				if (NULL != pBrep)
 					proxyObj = pBrep->GetEdge (selection->Geom);
 				}

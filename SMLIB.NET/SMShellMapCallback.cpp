@@ -46,7 +46,7 @@ namespace PESMLIB
 			{
 				XML::XmlElement* XmlPtElement = m_XmlDoc->CreateElement("SPnt");
 				m_XmlShellPtsElem->AppendChild(XmlPtElement);
-				System::String __gc *sCoord = System::String::Concat(
+				System::String^ sCoord = System::String::Concat(
 					System::Convert::ToString(rPolygon3DPoints[iPt].x), 
 					System::Convert::ToString(" "),
 					System::Convert::ToString(rPolygon3DPoints[iPt].y),

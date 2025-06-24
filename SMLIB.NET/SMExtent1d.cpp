@@ -105,7 +105,7 @@ namespace PESMLIB
 		}
 	}
 
-   String __gc * Extent1d::ToString ()
+   String^  Extent1d::ToString ()
    {
       try
       {
@@ -118,14 +118,14 @@ namespace PESMLIB
       }
    }
 
-   Extent1d __gc * Extent1d::Parse (String __gc *sVector)
+   Extent1d^  Extent1d::Parse (String^ sVector)
    {
       try
       {
          if (NULL != sVector)
          {
             System::Char cTok[] = {','};
-            System::String __gc *sSplit[] = sVector->Split (cTok);
+            System::String^ sSplit[] = sVector->Split (cTok);
             return new Extent1d (
                System::Convert::ToDouble (sSplit[0]), 
                System::Convert::ToDouble (sSplit[1]));
@@ -148,7 +148,7 @@ namespace PESMLIB
             return m_pIwExtent1d->GetMin ();
          }
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
@@ -164,7 +164,7 @@ namespace PESMLIB
             return m_pIwExtent1d->GetMax ();
          }
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
@@ -181,7 +181,7 @@ namespace PESMLIB
 //         if (this->Changed != NULL)
 //            Changed(this, new System::EventArgs());
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
@@ -197,7 +197,7 @@ namespace PESMLIB
 //         if (this->Changed != NULL)
 //            Changed(this, new System::EventArgs());
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
@@ -210,13 +210,13 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertFrom (context, sourceType);
    }
 
-   Object __gc * Extent1dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
+   Object^  Extent1dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
    {
 	   if (value->GetType() == __typeof(String))
 	   {
-		   String __gc* sValue = dynamic_cast< String *>(value);
+		   String^  sValue = dynamic_cast< String *>(value);
            System::Char cTok[] = {','};
-		   String __gc* v[]  = sValue->Split(cTok);
+		   String^  v[]  = sValue->Split(cTok);
 		   if (v->Length != 2)
 			   throw new ArgumentException(
 			   "Extent1d string must be in the form <min>,<max>");
@@ -236,7 +236,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertTo (context, destinationType);
    }
 
-   System::Object __gc * Extent1dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
+   System::Object^  Extent1dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
    {
 	   String* sFormat = String::Empty;
 
@@ -269,7 +269,7 @@ namespace PESMLIB
 		   Extent1d* ext = static_cast<Extent1d*>(value);
 
 		   // Specify that we should use the two-parameter constructor.
-		   Type __gc * types[] = {__typeof(double), __typeof(double), __typeof(double)};
+		   Type^  types[] = {__typeof(double), __typeof(double), __typeof(double)};
 		   ArrayList *coords  = new ArrayList();
 		   coords->Add(__box(ext->Min));
 		   coords->Add(__box(ext->Max));

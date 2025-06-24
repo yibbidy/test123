@@ -183,13 +183,13 @@ namespace PESMLIB
 		{
 			int polygon_count = rPolygonVertexCounts.GetSize();
 			int total_polygon_points = rPolygon3DPoints.GetSize();
-			int face_list __gc[];
-			float shell_points __gc[];
-			float normals __gc[];
+                       cli::array<int>^ face_list;
+                       cli::array<float>^ shell_points;
+                       cli::array<float>^ normals;
 
 			// create arrays to hold hoops shell input data
-			shell_points = new float __gc[3*total_polygon_points];
-			normals = new float __gc[3*total_polygon_points];
+                       shell_points = gcnew cli::array<float>(3*total_polygon_points);
+                       normals = gcnew cli::array<float>(3*total_polygon_points);
 
 			// copy data from smlib format to hoops format for points and normals
 			// I am using register variables here to try and speed up the loops.
@@ -209,7 +209,7 @@ namespace PESMLIB
 			// compute the size of the facelist array and malloc memory for it.
 			int face_list_length = 4*polygon_count;
 			//face_list = (int *) malloc (face_list_length * sizeof (int));
-			face_list = new int __gc[face_list_length];
+                       face_list = gcnew cli::array<int>(face_list_length);
 			// create hoops face list from the crazy storage format from SMlib
 			// I am using register variables here to try and speed up the loops.
 			register int count=0,jump=0;;

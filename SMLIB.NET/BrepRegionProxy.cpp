@@ -16,7 +16,7 @@ namespace PESMLIB
       m_dArea = System::Double::MinValue;
    }
 
-   BrepRegionProxy::BrepRegionProxy (PESMLIB::Context __gc *pContext, PESMLIB::Brep __gc *pBrep, long lRegionID)
+   BrepRegionProxy::BrepRegionProxy (PESMLIB::Context^ pContext, PESMLIB::Brep^ pBrep, long lRegionID)
    {
       m_pContext = pContext;
       m_pBrep = pBrep;
@@ -29,7 +29,7 @@ namespace PESMLIB
    {
    }
       
-   bool BrepRegionProxy::Equals (System::Object __gc * obj)
+   bool BrepRegionProxy::Equals (System::Object^  obj)
    {
       try
       {
@@ -48,7 +48,7 @@ namespace PESMLIB
    }
 
    // IComparable interface
-   int BrepRegionProxy::CompareTo(System::Object __gc *obj)
+   int BrepRegionProxy::CompareTo(System::Object^ obj)
    {
       try
       {
@@ -93,7 +93,7 @@ namespace PESMLIB
    }
 
    bool BrepRegionProxy::ComputePreciseProperties (
-	   double __gc& dArea, double __gc& dVolume, Vector3d __gc *centroid, ArrayList __gc *arrMoments)
+	   double% dArea, double% dVolume, Vector3d^ centroid, ArrayList^ arrMoments)
    {
 	   try
 	   {
@@ -125,7 +125,7 @@ namespace PESMLIB
 				   dVolume = rdVolume;
 				   for (unsigned int iMom = 0; iMom < moments.GetSize (); iMom++)
 				   {
-					   Vector3d __gc *vec = new Vector3d (moments[iMom].x, moments[iMom].y, moments[iMom].z);
+					   Vector3d^ vec = new Vector3d (moments[iMom].x, moments[iMom].y, moments[iMom].z);
 					   arrMoments->Add (vec);
 				   }
 
@@ -134,7 +134,7 @@ namespace PESMLIB
 					   dVolume = -dVolume;
 					   for (int iMom = 4; iMom < arrMoments->Count; iMom++)
 					   {
-						   Vector3d __gc *vec = dynamic_cast<Vector3d *> (arrMoments->get_Item (iMom));
+						   Vector3d^ vec = dynamic_cast<Vector3d *> (arrMoments->get_Item (iMom));
 						   if (vec)
 							   vec->Scale (-1.0);
 					   }
@@ -144,7 +144,7 @@ namespace PESMLIB
 				   return false;
 		   }
 	   }
-	   catch (System::Exception __gc *e)
+	   catch (System::Exception^ e)
 	   {
 		   Console::WriteLine (e->Message);
 		   return false;
@@ -153,7 +153,7 @@ namespace PESMLIB
    }
 
    bool BrepRegionProxy::ComputeProperties (
-	   double __gc& dArea, double __gc& dVolume, Vector3d __gc *centroid, ArrayList __gc *arrMoments)
+	   double% dArea, double% dVolume, Vector3d^ centroid, ArrayList^ arrMoments)
    {
 	   try
 	   {
@@ -185,7 +185,7 @@ namespace PESMLIB
 				   dVolume = rdVolume;
 				   for (int iMom = 0; iMom < 2; iMom++) // only first 2 moments currently valid in SMLIB
 				   {
-					   Vector3d __gc *vec = new Vector3d (vecMoments[iMom].x, vecMoments[iMom].y, vecMoments[iMom].z);
+					   Vector3d^ vec = new Vector3d (vecMoments[iMom].x, vecMoments[iMom].y, vecMoments[iMom].z);
 					   arrMoments->Add (vec);
 				   }
 
@@ -194,7 +194,7 @@ namespace PESMLIB
 					   dVolume = -dVolume;
 					   for (int iMom = 0; iMom < 2; iMom++)
 					   {
-						   Vector3d __gc *vec = dynamic_cast<Vector3d *> (arrMoments->get_Item (iMom));
+						   Vector3d^ vec = dynamic_cast<Vector3d *> (arrMoments->get_Item (iMom));
 						   if (vec)
 							   vec->Scale (-1.0);
 					   }
@@ -204,7 +204,7 @@ namespace PESMLIB
 				   return false;
 		   }
 	   }
-	   catch (System::Exception __gc *e)
+	   catch (System::Exception^ e)
 	   {
 		   Console::WriteLine (e->Message);
 		   return false;
@@ -226,7 +226,7 @@ namespace PESMLIB
 	   return m_dArea;
    }
 
-   PESMLIB::Vector3d __gc * BrepRegionProxy::get_Centroid()
+   PESMLIB::Vector3d^  BrepRegionProxy::get_Centroid()
    {
 	   if (m_dArea == System::Double::MinValue)
 		   SetProperties();
@@ -244,8 +244,8 @@ namespace PESMLIB
 		   double dArea = 0.;
 		   IwVector3d ptOrigin (0., 0., 0.), ptCentroid;
 		   IwVector3d vecMoments[6];
-		   Vector3d __gc *vecCentroid = new Vector3d (0.,0.,0.);
-		   System::Collections::ArrayList __gc * arrMoments = new System::Collections::ArrayList();
+		   Vector3d^ vecCentroid = new Vector3d (0.,0.,0.);
+		   System::Collections::ArrayList^  arrMoments = new System::Collections::ArrayList();
 
 		   if (ComputeProperties (dArea, dVolume, vecCentroid, arrMoments))
 		   {
@@ -262,9 +262,9 @@ namespace PESMLIB
 	   }
    }
 
-   System::Collections::ArrayList __gc * BrepRegionProxy::GetFaces()
+   System::Collections::ArrayList^  BrepRegionProxy::GetFaces()
    {
-	   System::Collections::ArrayList __gc * listFaceProxies = new System::Collections::ArrayList();
+	   System::Collections::ArrayList^  listFaceProxies = new System::Collections::ArrayList();
       IwRegion *pIwRegion = GetIwRegion ();
       if (NULL != pIwRegion)
       {
@@ -307,7 +307,7 @@ namespace PESMLIB
 
 //      if (m_pBrep && m_pContext)
 //      {
-//         PESMLIB::Brep __gc *destBrep = new PESMLIB::Brep (m_pContext, NULL);
+//         PESMLIB::Brep^ destBrep = new PESMLIB::Brep (m_pContext, NULL);
 //
 //         // In order for the CopyFaces method of the Brep to work when copying into
 //         // an empty Brep, the tolerance of the destination Brep must be the same as
@@ -336,7 +336,7 @@ namespace PESMLIB
    //{
    //}
 	
-   bool BrepRegionProxy::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+   bool BrepRegionProxy::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
    {
       try
       {
@@ -349,7 +349,7 @@ namespace PESMLIB
             ptMax->y = System::Single::MinValue;
             ptMax->z = System::Single::MinValue;
 
-            System::Collections::ArrayList __gc *arrFaceProxies = GetFaces ();
+            System::Collections::ArrayList^ arrFaceProxies = GetFaces ();
 
             for (int iFace = 0; iFace < arrFaceProxies->Count; iFace++)
             {
@@ -370,7 +370,7 @@ namespace PESMLIB
             return true;
          }
       }
-      catch (System::Exception __gc *ex)
+      catch (System::Exception^ ex)
       {
          Console::WriteLine (ex->Message);
       }
@@ -389,7 +389,7 @@ namespace PESMLIB
          m_pBrep->UnHighlightFeature (keySeg, Brep::BrepFeatureType::Brep_Region, m_lRegionID);
    }
 
-   System::Object __gc * BrepRegionProxy::GetReferencableObject ()
+   System::Object^  BrepRegionProxy::GetReferencableObject ()
    {
       return m_pBrep;
    }
@@ -438,7 +438,7 @@ namespace PESMLIB
       return pIwRegion;
    }
 
-   bool BrepRegionProxy::IsDependentOn (IPersistentObject __gc *pObj)
+   bool BrepRegionProxy::IsDependentOn (IPersistentObject^ pObj)
    {
       try
       {
@@ -455,7 +455,7 @@ namespace PESMLIB
                   if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *newString = new System::String (pcElements);
+                     System::String^ newString = new System::String (pcElements);
                      if (newString->IndexOf (pObj->IdSelf) >= 0)
                         return true;
                   }
@@ -471,11 +471,11 @@ namespace PESMLIB
       return false;
    }
 
-   System::Collections::ArrayList __gc * BrepRegionProxy::GetObjectDependencies ()
+   System::Collections::ArrayList^  BrepRegionProxy::GetObjectDependencies ()
    {
       try
       {
-         System::Collections::ArrayList __gc *arrDependents = new System::Collections::ArrayList ();
+         System::Collections::ArrayList^ arrDependents = new System::Collections::ArrayList ();
 
          // First retrieve the Brep region from the owning brep.
 
@@ -490,7 +490,7 @@ namespace PESMLIB
                   if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *sAttribute = new System::String (pcElements);
+                     System::String^ sAttribute = new System::String (pcElements);
                      
                      // Parse the string of ObjIDs and obtain the objects from the brep
                     
@@ -502,7 +502,7 @@ namespace PESMLIB
 
                      for (int iTok = 0; iTok < sTokens->Count; iTok++)
                      {
-                        System::Object __gc *pObj = m_pBrep->GetDependency (sTokens[iTok]);
+                        System::Object^ pObj = m_pBrep->GetDependency (sTokens[iTok]);
                         if (NULL != pObj)
                            arrDependents->Add (pObj);
                         else // invalid dependency so remove it from this region
@@ -561,7 +561,7 @@ namespace PESMLIB
       return NULL;
    }
 
-   void BrepRegionProxy::RemoveObjectDependency (IPersistentObject __gc *pIPersistentObject)
+   void BrepRegionProxy::RemoveObjectDependency (IPersistentObject^ pIPersistentObject)
    {
       try
       {
@@ -580,7 +580,7 @@ namespace PESMLIB
                   // If existing attribute type found, get the string and look for this ID and
                   // if found remove it.
 
-                  System::String __gc *sAttribute = new System::String (
+                  System::String^ sAttribute = new System::String (
                      pExistingAttribute->GetCharacterElementsAddress ());
                   int iObj = sAttribute->IndexOf (pIPersistentObject->IdSelf);
                   if (iObj >= 0) // object found so modify string to remove it
@@ -626,7 +626,7 @@ namespace PESMLIB
       }
    }
 
-   void BrepRegionProxy::AddObjectDependency (IPersistentObject __gc *pIPersistentObject)
+   void BrepRegionProxy::AddObjectDependency (IPersistentObject^ pIPersistentObject)
    {
       try
       {
@@ -637,7 +637,7 @@ namespace PESMLIB
             IwRegion *pIwRegion = GetIwRegion ();
             if (NULL != pIwRegion)
             {
-               System::String __gc *sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
+               System::String^ sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
 
                IwAttribute *pExistingAttribute = pIwRegion->FindAttribute (AttributeID_IDOBJ);
                if (NULL != pExistingAttribute)
@@ -645,7 +645,7 @@ namespace PESMLIB
                   // If existing attribute found, get the string and look for this ID. 
                   // Don't add the ID again if it already exists.
 
-                  System::String __gc *sAttribute = new System::String (
+                  System::String^ sAttribute = new System::String (
                      pExistingAttribute->GetCharacterElementsAddress ());
                   int iObj = sAttribute->IndexOf (pIPersistentObject->IdSelf);
                   if (iObj < 0) // object not found so add it
@@ -685,7 +685,7 @@ namespace PESMLIB
       }
    }
 
-   void BrepRegionProxy::SetAttribute (AttributeID ulAttributeID, System::Object __gc *oAttrib, 
+   void BrepRegionProxy::SetAttribute (AttributeID ulAttributeID, System::Object^ oAttrib, 
       AttributeBehavior behavior)
    {
       try
@@ -764,7 +764,7 @@ namespace PESMLIB
       }
    }
 
-   System::Object __gc * BrepRegionProxy::FindAttribute (AttributeID ulAttributeID)
+   System::Object^  BrepRegionProxy::FindAttribute (AttributeID ulAttributeID)
    {
       try
       {
@@ -780,7 +780,7 @@ namespace PESMLIB
                {
                   if (pAttribute->GetNumLongElements () > 0)
                   {
-                     System::Int32 __gc *newLong = new System::Int32();
+                     System::Int32^ newLong = new System::Int32();
                      const long *plElements = pAttribute->GetLongElementsAddress ();
                      *newLong = plElements[0];
                      return __box(*newLong);
@@ -788,13 +788,13 @@ namespace PESMLIB
                   else if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *newString = new System::String (pcElements);
+                     System::String^ newString = new System::String (pcElements);
                      return newString;
                   }
                   else if (pAttribute->GetNumDoubleElements () > 0)
                   {
                      const double *pdElements = pAttribute->GetDoubleElementsAddress ();
-                     System::Double __gc *newDouble = new System::Double ();
+                     System::Double^ newDouble = new System::Double ();
                      *newDouble = pdElements[0];
                      return __box (*newDouble);
                   }
@@ -812,7 +812,7 @@ namespace PESMLIB
       return NULL;
    }
 
-   bool BrepRegionProxy::RayIntersect(PESMLIB::Vector3d __gc *start, PESMLIB::Vector3d __gc *dir)
+   bool BrepRegionProxy::RayIntersect(PESMLIB::Vector3d^ start, PESMLIB::Vector3d^ dir)
    {
 
 	   IwPoint3d iwStart(start->X + (dir->X * .000001),

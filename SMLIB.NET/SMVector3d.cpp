@@ -170,13 +170,13 @@ namespace PESMLIB
 		vecZ.SetCanonical(rVecZ.x, rVecZ.y, rVecZ.z);
 	}
 
-	Vector3d __gc * Vector3d::ProjectPointToPlane(Vector3d &ptPlane, Vector3d &vecPlaneNormal)
+	Vector3d^  Vector3d::ProjectPointToPlane(Vector3d &ptPlane, Vector3d &vecPlaneNormal)
 	{
 		IwVector3d ptProject = m_pIwVector3d->ProjectPointToPlane(*(ptPlane.GetIwObj()), *(vecPlaneNormal.GetIwObj()));
 		return new Vector3d(ptProject.x, ptProject.y, ptProject.z);
 	}
 
-	Vector3d __gc * Vector3d::ProjectVectorToPlane(Vector3d &vecPlaneNormal)
+	Vector3d^  Vector3d::ProjectVectorToPlane(Vector3d &vecPlaneNormal)
 	{
 		IwVector3d vecProject = m_pIwVector3d->ProjectToPlane(*(vecPlaneNormal.GetIwObj()));
 		return new Vector3d(vecProject.x, vecProject.y, vecProject.z);
@@ -187,23 +187,23 @@ namespace PESMLIB
 		m_pIwVector3d->Unitize();
 	}
 
-	Vector3d __gc * Vector3d::op_Addition(Vector3d *lh, Vector3d *rh)
+	Vector3d^  Vector3d::op_Addition(Vector3d *lh, Vector3d *rh)
 	{
 		return new Vector3d(lh->X + rh->X, lh->Y + rh->Y, lh->Z + rh->Z);
 	}
 
-	Vector3d __gc * Vector3d::op_Subtraction(Vector3d *lh, Vector3d *rh)
+	Vector3d^  Vector3d::op_Subtraction(Vector3d *lh, Vector3d *rh)
 	{
 		return new Vector3d (lh->X - rh->X, lh->Y -rh->Y, lh->Z - rh->Z);
 	}
 
-	Vector3d __gc * Vector3d::op_Multiply(Vector3d *lh, Vector3d *rh)
+	Vector3d^  Vector3d::op_Multiply(Vector3d *lh, Vector3d *rh)
 	{
 		IwVector3d cross = *(lh->GetIwObj()) * (*(rh->GetIwObj()));
 		return new Vector3d(cross.x, cross.y, cross.z);
 	}
 
-	Vector3d __gc * Vector3d::op_Assign(Vector3d *lh, Vector3d *rh)
+	Vector3d^  Vector3d::op_Assign(Vector3d *lh, Vector3d *rh)
 	{
 		lh->X = rh->X;
 		lh->Y = rh->Y;
@@ -211,7 +211,7 @@ namespace PESMLIB
 		return lh;
 	}
 
-   String __gc * Vector3d::ToString ()
+   String^  Vector3d::ToString ()
    {
       try
       {
@@ -224,14 +224,14 @@ namespace PESMLIB
       }
    }
 
-   Vector3d __gc * Vector3d::Parse (String __gc *sVector)
+   Vector3d^  Vector3d::Parse (String^ sVector)
    {
       try
       {
          if (NULL != sVector)
          {
             System::Char cTok[] = {','};
-            System::String __gc *sSplit[] = sVector->Split (cTok);
+            System::String^ sSplit[] = sVector->Split (cTok);
             return new Vector3d (
                System::Convert::ToDouble (sSplit[0]), 
                System::Convert::ToDouble (sSplit[1]), 
@@ -274,7 +274,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertFrom (context, sourceType);
    }
 
-   Object __gc * Vector3dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
+   Object^  Vector3dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
    {
 	   Utilities::UnitsAttribute* unitsAttrib = NULL;
 	   Utilities::UnitScaleManager* scaleMgr = Utilities::UnitScaleManager::Current;
@@ -297,7 +297,7 @@ namespace PESMLIB
 				   break;
 			   }
 		   }
-		   String __gc* sValue = dynamic_cast< String *>(value);
+		   String^  sValue = dynamic_cast< String *>(value);
 		   // If we have a UnitsAttribute, parse out value and abbreviation
 		   if (unitsAttrib != NULL)
 		   {
@@ -309,7 +309,7 @@ namespace PESMLIB
 		   else
 			   sValues = sValue;
 		   // Parse the vector values
-		   String __gc* v[]  = sValues->Split(cTok);
+		   String^  v[]  = sValues->Split(cTok);
 		   if (v->Length != 3)
 			   throw new ArgumentException(
 			   "Vector3d string must be in the form <x>,<y>,<z>");
@@ -357,7 +357,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertTo (context, destinationType);
    }
 
-   System::Object __gc * Vector3dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
+   System::Object^  Vector3dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
    {
 	   String* sFormat = String::Empty;
 	   String* sFormatSpec = String::Empty;
@@ -421,7 +421,7 @@ namespace PESMLIB
 		   Vector3d* point = static_cast<Vector3d*>(value);
 
 		   // Specify that we should use the two-parameter constructor.
-		   Type __gc * types[] = {__typeof(double), __typeof(double), __typeof(double)};
+		   Type^  types[] = {__typeof(double), __typeof(double), __typeof(double)};
 		   ArrayList *coords  = new ArrayList();
 		   coords->Add(__box(point->X));
 		   coords->Add(__box(point->Y));

@@ -11,7 +11,7 @@ using namespace Utilities;
 namespace PESMLIB
 {
 	[TypeConverterAttribute(__typeof(Utilities::PropertiesDeluxeTypeConverter))]
-	__gc public class NurbsSurface : public SMObject, public VEDM::Windows::IGeometry
+	public ref class NurbsSurface : public SMObject, public VEDM::Windows::IGeometry
 	{
 	public:
 		NurbsSurface(void);
@@ -22,21 +22,21 @@ namespace PESMLIB
 			IwBSplineSurfaceForm, const IwTArray<ULONG>&, const IwTArray<ULONG>&,
 			const IwTArray<double>&, const IwTArray<double>&, IwKnotType,
 			const IwTArray<double> *, const IwExtent2d *);
-		void Copy (NurbsSurface __gc * srcNurbs);
-		//void Transform (PEHoops::MVO::Transformation __gc * oTransformation);
+		void Copy (NurbsSurface^  srcNurbs);
+		//void Transform (PEHoops::MVO::Transformation^  oTransformation);
 		void InsertGraphics (bool bDrawDetailed, int handle);
 		//void RemoveGraphics (KEY keyGeom);
 		void Highlight (HC::KEY);
 		void UnHighlight (HC::KEY);
-		bool ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax);
-		XML::XmlElement __gc * GetXmlElement (int iFaceOffset) { return m_pXMLElem; }
+		bool ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax);
+		XML::XmlElement^  GetXmlElement (int iFaceOffset) { return m_pXMLElem; }
 		System::Object * GetReferencableObject ();
 
       // Object Overridables
-		bool Equals (System::Object __gc *obj);
+		bool Equals (System::Object^ obj);
 
       // IComparable interface
-		int CompareTo (System::Object __gc *);
+		int CompareTo (System::Object^ );
 
 		// Properties
 		[Category("Organization"), Description("Order of NURB surface in u-direction"),

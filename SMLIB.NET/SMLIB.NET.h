@@ -5,7 +5,7 @@
 
 namespace PESMLIB
 {
-	public __gc class ManagedWrapper 
+	public ref class ManagedWrapper 
 	{
 	public:
 		ManagedWrapper() { minitialize(); }

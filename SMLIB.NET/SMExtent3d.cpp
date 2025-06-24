@@ -116,7 +116,7 @@ namespace PESMLIB
 		return m_pIwExtent3d->GetSize ().Length ();
 	}
 
-   String __gc * Extent3d::ToString ()
+   String^  Extent3d::ToString ()
    {
       try
       {
@@ -129,14 +129,14 @@ namespace PESMLIB
       }
    }
 
-   Extent3d __gc * Extent3d::Parse (String __gc *sVector)
+   Extent3d^  Extent3d::Parse (String^ sVector)
    {
       try
       {
          if (NULL != sVector)
          {
             System::Char cTok[] = {','};
-            System::String __gc *sSplit[] = sVector->Split (cTok);
+            System::String^ sSplit[] = sVector->Split (cTok);
             return new Extent3d (
                System::Convert::ToDouble (sSplit[0]), 
                System::Convert::ToDouble (sSplit[1]), 
@@ -154,43 +154,43 @@ namespace PESMLIB
       }
    }
 
-   Vector3d __gc * Extent3d::get_Min ()
+   Vector3d^  Extent3d::get_Min ()
    {
       try
       {
          if (m_pIwExtent3d != NULL)
          {
             IwPoint3d pt3d = m_pIwExtent3d->GetMin ();
-            PESMLIB::Vector3d __gc *pVector = new Vector3d (pt3d.x, pt3d.y, pt3d.z);
+            PESMLIB::Vector3d^ pVector = new Vector3d (pt3d.x, pt3d.y, pt3d.z);
             return pVector;
          }
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
       return NULL;
    }
 
-   Vector3d __gc * Extent3d::get_Max ()
+   Vector3d^  Extent3d::get_Max ()
    {
       try
       {
          if (m_pIwExtent3d != NULL)
          {
             IwPoint3d pt3d = m_pIwExtent3d->GetMax ();
-            PESMLIB::Vector3d __gc *pVector = new Vector3d (pt3d.x, pt3d.y, pt3d.z);
+            PESMLIB::Vector3d^ pVector = new Vector3d (pt3d.x, pt3d.y, pt3d.z);
             return pVector;
          }
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
       return NULL;
    }
 
-   void Extent3d::set_Min(Vector3d __gc *pVec)
+   void Extent3d::set_Min(Vector3d^ pVec)
    {
       try
       {
@@ -200,13 +200,13 @@ namespace PESMLIB
          if (this->Changed != NULL)
             Changed(this, new System::EventArgs());
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
    }
 
-   void Extent3d::set_Max(Vector3d __gc *pVec)
+   void Extent3d::set_Max(Vector3d^ pVec)
    {
       try
       {
@@ -216,7 +216,7 @@ namespace PESMLIB
          if (this->Changed != NULL)
             Changed(this, new System::EventArgs());
       }
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->get_Message ());
       }
@@ -229,13 +229,13 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertFrom (context, sourceType);
    }
 
-   Object __gc * Extent3dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
+   Object^  Extent3dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
    {
 	   if (value->GetType() == __typeof(String))
 	   {
-		   String __gc* sValue = dynamic_cast< String *>(value);
+		   String^  sValue = dynamic_cast< String *>(value);
            System::Char cTok[] = {','};
-		   String __gc* v[]  = sValue->Split(cTok);
+		   String^  v[]  = sValue->Split(cTok);
 		   if (v->Length != 6)
 			   throw new ArgumentException(
 			   "Extent3d string must be in the form <x>,<y>,<z>");
@@ -255,7 +255,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertTo (context, destinationType);
    }
 
-   System::Object __gc * Extent3dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
+   System::Object^  Extent3dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
    {
 	   String* sFormat = String::Empty;
 
@@ -288,7 +288,7 @@ namespace PESMLIB
 		   Extent3d* ext = static_cast<Extent3d*>(value);
 
 		   // Specify that we should use the two-parameter constructor.
-		   Type __gc * types[] = {__typeof(double), __typeof(double), __typeof(double)};
+		   Type^  types[] = {__typeof(double), __typeof(double), __typeof(double)};
 		   ArrayList *coords  = new ArrayList();
 		   coords->Add(__box(ext->Min->X));
 		   coords->Add(__box(ext->Min->Y));

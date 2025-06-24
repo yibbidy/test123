@@ -69,9 +69,9 @@ namespace PESMLIB
 		}
 	}
 
-   void CompositeCurve::Tessellate(Extent1d __gc *extInterval, double dChordHeightTolerance, 
+   void CompositeCurve::Tessellate(Extent1d^ extInterval, double dChordHeightTolerance, 
       double dAngleToleranceDeg, ULONG lMinimumNumberOfSegments, 
-      System::Collections::ArrayList __gc *parameters, System::Collections::ArrayList __gc * points)
+      System::Collections::ArrayList^ parameters, System::Collections::ArrayList^  points)
    {
       try
       {
@@ -104,14 +104,14 @@ namespace PESMLIB
       return;
    }
 
-   Extent1d __gc * CompositeCurve::GetNaturalInterval ()
+   Extent1d^  CompositeCurve::GetNaturalInterval ()
    {
       try
       {
          if (m_pIwObj != NULL)
          {
             IwExtent1d iwExtent = ((IwCompositeCurve *) m_pIwObj)->GetNaturalInterval ();
-            Extent1d __gc *extent = new Extent1d (iwExtent.GetMin (), iwExtent.GetMax ());
+            Extent1d^ extent = new Extent1d (iwExtent.GetMin (), iwExtent.GetMax ());
             return extent;
          }
       }
@@ -198,7 +198,7 @@ namespace PESMLIB
 	   return;
    }
 
-   NurbsCurve __gc * CompositeCurve::GetCurveSegment (int iSeg)
+   NurbsCurve^  CompositeCurve::GetCurveSegment (int iSeg)
    {
       try
       {
@@ -224,7 +224,7 @@ namespace PESMLIB
                   IwExtent1d newExtent;
                   pNewIwCurve->ReverseParameterization (pNewIwCurve->GetNaturalInterval (), newExtent);
                }
-               NurbsCurve __gc *pNewCurve = new NurbsCurve ();
+               NurbsCurve^ pNewCurve = new NurbsCurve ();
                pNewCurve->AttachIwObj (m_pContext, pNewIwCurve);
                return pNewCurve;
             }
@@ -237,8 +237,8 @@ namespace PESMLIB
    }
 
    void CompositeCurve::BuildCompositesFromCurves (Context *pContext, XML::XmlElement *pXMLElem, 
-         System::Collections::ArrayList __gc *arrNurbsCurves, bool bMakeHomogeneous,
-         double dSamePtTol, double dDistToCreateLine, System::Collections::ArrayList __gc *arrComposites)
+         System::Collections::ArrayList^ arrNurbsCurves, bool bMakeHomogeneous,
+         double dSamePtTol, double dDistToCreateLine, System::Collections::ArrayList^ arrComposites)
    {
       try
       {
@@ -266,7 +266,7 @@ namespace PESMLIB
          {
             for (int iCurve = 0; iCurve < (int) arrIwCompCurves.GetSize (); iCurve++)
             {
-               CompositeCurve __gc *newCurve = new CompositeCurve ();
+               CompositeCurve^ newCurve = new CompositeCurve ();
                newCurve->AttachIwObj (pContext, arrIwCompCurves[iCurve]);
                arrComposites->Add (newCurve);
             }

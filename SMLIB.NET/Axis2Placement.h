@@ -4,7 +4,7 @@
 
 namespace PESMLIB
 {
-	__gc public class Axis2Placement :
+	public ref class Axis2Placement :
 	public PersistObject
 	{
 	public:

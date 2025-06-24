@@ -39,7 +39,7 @@ namespace PESMLIB
 	{
 	}
 
-	Brep::Brep (Context __gc * oContext, XML::XmlElement __gc * pElem) : SMObject()
+	Brep::Brep (Context^  oContext, XML::XmlElement^  pElem) : SMObject()
 	{
 		m_lFaceCounter = 0;
 		m_lRegionCounter = 0;
@@ -78,13 +78,13 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::AddDependency (IPersistentObject __gc *pObj)
+	void Brep::AddDependency (IPersistentObject^ pObj)
 	{
 		try
 		{
 			// Create a moniker for the object and add it to the dictionary.
 
-			XmlNewMoniker __gc *pMoniker = __try_cast<XmlNewMoniker *> (XmlNewMoniker::MonikerFromObject (pObj));
+			XmlNewMoniker^ pMoniker = __try_cast<XmlNewMoniker *> (XmlNewMoniker::MonikerFromObject (pObj));
 			if (NULL != pMoniker)
 			{
 				// Add the dependency. If the dependency already exists, an ArgumentException is thrown so the 
@@ -106,7 +106,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::RemoveDependency (IPersistentObject __gc *pObj)
+	void Brep::RemoveDependency (IPersistentObject^ pObj)
 	{
 		try
 		{
@@ -122,7 +122,7 @@ namespace PESMLIB
 		}
 	}
 
-	System::Object __gc * Brep::GetDependency (System::String __gc *sObjId)
+	System::Object^  Brep::GetDependency (System::String^ sObjId)
 	{
 		try
 		{
@@ -139,15 +139,15 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetObjectDependencies ()
+	System::Collections::ArrayList^  Brep::GetObjectDependencies ()
 	{
 		try
 		{
-			System::Collections::ArrayList __gc *arrDependents = new System::Collections::ArrayList ();
-			IDictionaryEnumerator __gc *pEnum = m_dependencies->GetEnumerator ();
+			System::Collections::ArrayList^ arrDependents = new System::Collections::ArrayList ();
+			IDictionaryEnumerator^ pEnum = m_dependencies->GetEnumerator ();
 			while (pEnum->MoveNext ())
 			{
-				System::Object __gc *pObj = __try_cast<XmlNewMoniker *> (pEnum->Value)->ObjectFromMoniker ();
+				System::Object^ pObj = __try_cast<XmlNewMoniker *> (pEnum->Value)->ObjectFromMoniker ();
 				if (pObj != NULL)
 					arrDependents->Add (pObj);
 			}
@@ -162,7 +162,7 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	void Brep::AttachIwObj (Context __gc *pContext, IwObject *pIwObj)
+	void Brep::AttachIwObj (Context^ pContext, IwObject *pIwObj)
 	{
 
 		try
@@ -237,7 +237,7 @@ namespace PESMLIB
 			BrepFaceProxy *pFace = GetFace(nID);
 			if (pFace != NULL)
 			{
-				System::Object __gc *oAttrib = pFace->FindAttribute(PESMLIB::AttributeID_HKEY);
+				System::Object^ oAttrib = pFace->FindAttribute(PESMLIB::AttributeID_HKEY);
 				if (oAttrib != NULL)
 				{
 					System::Int32 *pkey = dynamic_cast<System::Int32 *>(oAttrib);
@@ -348,7 +348,7 @@ namespace PESMLIB
 			BrepFaceProxy *pFace = GetFace(nID);
 			if (pFace != NULL)
 			{
-				System::Object __gc *oAttrib = pFace->FindAttribute(PESMLIB::AttributeID_HKEY);
+				System::Object^ oAttrib = pFace->FindAttribute(PESMLIB::AttributeID_HKEY);
 				if (oAttrib != NULL)
 				{
 					System::Int32 *pkey = dynamic_cast<System::Int32 *>(oAttrib);
@@ -543,7 +543,7 @@ namespace PESMLIB
 		HD::KInsert_Object();
 	}
 
-	void Brep::InsertGraphics (System::Collections::ArrayList __gc *hkFaces, System::Collections::ArrayList __gc *hkEdges, bool bDrawDetailed)
+	void Brep::InsertGraphics (System::Collections::ArrayList^ hkFaces, System::Collections::ArrayList^ hkEdges, bool bDrawDetailed)
 	{
 
 		try
@@ -709,9 +709,9 @@ namespace PESMLIB
 
 					int nPts = pPoints.GetSize();
 					//HC_POINT* hpt = new HC_POINT[nPts];
-					float hpt __gc[];
+                                       cli::array<float>^ hpt;
 
-					hpt = new float __gc[3*nPts];
+                                       hpt = gcnew cli::array<float>(3*nPts);
 					//HC::Open_Segment("vertices");
 					//HC::Set_Marker_Symbol("[]");
 					for (int i = 0; i < nPts; i++)
@@ -781,7 +781,7 @@ namespace PESMLIB
 
 			//AddToDOM (); is this needed 
 		}
-		catch (System::Exception __gc *ex)
+		catch (System::Exception^ ex)
 		{
 			System::Console::WriteLine (ex->get_Message());
 		}
@@ -796,7 +796,7 @@ namespace PESMLIB
 	//	// TODO
 	//}
 
-	void Brep::ComputeBoundingBoxOld(HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	void Brep::ComputeBoundingBoxOld(HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
 	{
 		IwExtent3d oBox;
 		((IwBrep *)m_pIwObj)->CalculateBoundingBox(oBox);
@@ -808,7 +808,7 @@ namespace PESMLIB
 		ptMax->z = (float)oBox.GetMax().z;
 	}
 
-	bool Brep::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	bool Brep::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
 	{
 		if (ptMax->x == -FLT_MAX && ptMin->z == FLT_MAX)
 		{
@@ -843,7 +843,7 @@ namespace PESMLIB
 
 			// New code here
 
-			BrepRegionProxy __gc *pInfRegion = GetInfiniteRegion ();
+			BrepRegionProxy^ pInfRegion = GetInfiniteRegion ();
 			if (pInfRegion != NULL)
 			{
 				pInfRegion->ComputeBoundingBox (ptMin, ptMax);
@@ -956,7 +956,7 @@ namespace PESMLIB
 		} // if (m_pIwObj != NULL)
 	}
 
-	void Brep::ExportBrepToFile (String __gc *sFilename)
+	void Brep::ExportBrepToFile (String^ sFilename)
 	{
 
 		if (m_pIwObj != NULL && m_pXMLElem != NULL)
@@ -985,7 +985,7 @@ namespace PESMLIB
 		}
 	}
 
-	int Brep::CompareTo (System::Object __gc *obj)
+	int Brep::CompareTo (System::Object^ obj)
 	{
 		try
 		{
@@ -1021,7 +1021,7 @@ namespace PESMLIB
 		return 1;
 	}
 
-	bool Brep::Equals (System::Object __gc * obj)
+	bool Brep::Equals (System::Object^  obj)
 	{
 		try
 		{
@@ -1077,7 +1077,7 @@ namespace PESMLIB
 
 				// Add the Brep dependencies. Start by deleting any existing dependencies in the DOM.
 
-				Xml::XmlNode __gc *ndDependencies = m_pXMLElem->SelectSingleNode ("Dependencies");
+				Xml::XmlNode^ ndDependencies = m_pXMLElem->SelectSingleNode ("Dependencies");
 				if (NULL == ndDependencies)
 				{
 					ndDependencies = m_pXMLElem->OwnerDocument->CreateElement ("Dependencies");
@@ -1086,15 +1086,15 @@ namespace PESMLIB
 				else
 					ndDependencies->RemoveAll ();
 
-				IDictionaryEnumerator __gc *pEnum = m_dependencies->GetEnumerator ();
+				IDictionaryEnumerator^ pEnum = m_dependencies->GetEnumerator ();
 				while (pEnum->MoveNext ())
 				{
-					XmlNewMoniker __gc *pMoniker = __try_cast<XmlNewMoniker *> (pEnum->Value);
+					XmlNewMoniker^ pMoniker = __try_cast<XmlNewMoniker *> (pEnum->Value);
 					if (NULL != pMoniker)
 					{
-						Xml::XmlElement __gc *ndDependency = m_pXMLElem->OwnerDocument->CreateElement ("Dependency");
+						Xml::XmlElement^ ndDependency = m_pXMLElem->OwnerDocument->CreateElement ("Dependency");
 						ndDependency->SetAttribute ("sKey", __try_cast<System::String *> (pEnum->Key));
-						Xml::XmlNode __gc *ndObjMoniker = m_pXMLElem->OwnerDocument->ImportNode (pMoniker->XmlElement, true);
+						Xml::XmlNode^ ndObjMoniker = m_pXMLElem->OwnerDocument->ImportNode (pMoniker->XmlElement, true);
 						ndDependency->AppendChild (ndObjMoniker);
 						ndDependencies->AppendChild (ndDependency);
 					}
@@ -1117,12 +1117,12 @@ namespace PESMLIB
 
 				// Get the string from the stream.
 
-				String __gc * sBrepIO;
-				Process __gc * cp = Process::GetCurrentProcess();
+				String^  sBrepIO;
+				Process^  cp = Process::GetCurrentProcess();
 
                 if ((cp->PrivateMemorySize64 > 250000000 && oBrepIO.GetStringBufLength() > 19000) || oBrepIO.GetStringBufLength() > 999999)
 				{
-				    String __gc * fpath = String::Concat(Path::GetTempPath(), new String("NCEDN_"),
+				    String^  fpath = String::Concat(Path::GetTempPath(), new String("NCEDN_"),
 					__box(cp->Id)->ToString(),
 					String::Concat(new String("_"), __box(DateTime::Now.Ticks)->ToString()));
 				    sBrepIO = String::Concat(new String("TEMPFILE-"), fpath);
@@ -1134,8 +1134,8 @@ namespace PESMLIB
 
 
 				// Delete any existing CDATA nodes.
-				XML::XmlNodeList __gc *pList = m_pXMLElem->ChildNodes;
-				XML::XmlNode __gc *pNode;
+				XML::XmlNodeList^ pList = m_pXMLElem->ChildNodes;
+				XML::XmlNode^ pNode;
 
 				IEnumerator* iEnum = pList->GetEnumerator();
 				while (iEnum->MoveNext())
@@ -1155,7 +1155,7 @@ namespace PESMLIB
 
 			} // if (m_pIwObj != NULL && m_pXMLElem != NULL)
 		}
-		catch (System::Exception __gc * ex)
+		catch (System::Exception^  ex)
 		{
 			ex->get_Message();
 		}
@@ -1169,47 +1169,47 @@ namespace PESMLIB
 			{
 				// Get the persistent GUID.
 
-				String __gc * sId = m_pXMLElem->GetAttribute("idSelf");
+				String^  sId = m_pXMLElem->GetAttribute("idSelf");
 				if (sId->Length > 0)
 					SetId (sId);
 
-				String __gc *sFaceCounter = m_pXMLElem->GetAttribute ("lFaceCounter");
+				String^ sFaceCounter = m_pXMLElem->GetAttribute ("lFaceCounter");
 				if (sFaceCounter->Length > 0)
 					m_lFaceCounter = (long) Convert::ToInt32 (sFaceCounter);
 
-				String __gc *sRegionCounter = m_pXMLElem->GetAttribute ("lRegionCounter");
+				String^ sRegionCounter = m_pXMLElem->GetAttribute ("lRegionCounter");
 				if (sRegionCounter->Length > 0)
 					m_lRegionCounter = (long) Convert::ToInt32 (sRegionCounter);
 
 				// Get the dependencies
 
 				m_dependencies->Clear ();
-				Xml::XmlNode __gc *ndDependencies = m_pXMLElem->SelectSingleNode ("Dependencies");
+				Xml::XmlNode^ ndDependencies = m_pXMLElem->SelectSingleNode ("Dependencies");
 				if (NULL != ndDependencies)
 				{
-					Xml::XmlNodeList __gc *ndChildren = ndDependencies->ChildNodes;
+					Xml::XmlNodeList^ ndChildren = ndDependencies->ChildNodes;
 					for (int iItem = 0; iItem < ndChildren->Count; iItem++)
 					{
-						Xml::XmlElement __gc *elDependency = __try_cast<Xml::XmlElement *> (ndChildren->ItemOf[iItem]);
-						Xml::XmlNodeList __gc *ndMonikers = elDependency->GetElementsByTagName ("Moniker");
-						Xml::XmlNode __gc *ndMoniker = ndMonikers->ItemOf[0];
+						Xml::XmlElement^ elDependency = __try_cast<Xml::XmlElement *> (ndChildren->ItemOf[iItem]);
+						Xml::XmlNodeList^ ndMonikers = elDependency->GetElementsByTagName ("Moniker");
+						Xml::XmlNode^ ndMoniker = ndMonikers->ItemOf[0];
 						if (NULL != ndMoniker)
 						{
-							XmlNewMoniker __gc *pMoniker = new XmlNewMoniker (ndMoniker);
-							System::String __gc *sIdObj = elDependency->GetAttribute ("sKey");
+							XmlNewMoniker^ pMoniker = new XmlNewMoniker (ndMoniker);
+							System::String^ sIdObj = elDependency->GetAttribute ("sKey");
 							if (NULL != pMoniker && NULL != sIdObj && sIdObj->Length > 0)
 								m_dependencies->Add (sIdObj, pMoniker);
 						}
 					}
 				}
 
-				XML::XmlNodeList __gc * pList = m_pXMLElem->ChildNodes;
-				XML::XmlNode __gc * pNode;
+				XML::XmlNodeList^  pList = m_pXMLElem->ChildNodes;
+				XML::XmlNode^  pNode;
 
-				IEnumerator __gc * iEnum = pList->GetEnumerator();
+				IEnumerator^  iEnum = pList->GetEnumerator();
 				while (iEnum->MoveNext())
 				{
-					pNode = dynamic_cast<XML::XmlNode __gc *>(iEnum->Current);
+					pNode = dynamic_cast<XML::XmlNode^ >(iEnum->Current);
 
 					if (XML::XmlNodeType::CDATA == pNode->NodeType)
 					{
@@ -1243,13 +1243,13 @@ namespace PESMLIB
 				}
 			}
 		}
-		catch (System::Exception __gc * ex)
+		catch (System::Exception^  ex)
 		{
 			ex->get_Message();
 		}
 	}
 
-	void Brep::Copy (Brep __gc * srcBrep)
+	void Brep::Copy (Brep^  srcBrep)
 	{
 		try
 		{
@@ -1294,13 +1294,13 @@ namespace PESMLIB
 				AddToDOM ();
 			}
 		}
-		catch (System::Exception __gc *e)
+		catch (System::Exception^ e)
 		{
 			Console::WriteLine (e->Message);
 		}
 	}
 
-	void Brep::Mirror (Brep __gc *pBrep, Plane __gc * oMirrorPlane)
+	void Brep::Mirror (Brep^ pBrep, Plane^  oMirrorPlane)
 	{
 
 		if (pBrep == NULL || !HasIwContext() || m_pXMLElem == NULL)
@@ -1330,13 +1330,13 @@ namespace PESMLIB
 		AddToDOM ();
 	}
 
-	void Brep::ReplaceSurfaceOfFaces (System::Collections::ArrayList __gc *arrFaceProxies, System::Object __gc *surface)
+	void Brep::ReplaceSurfaceOfFaces (System::Collections::ArrayList^ arrFaceProxies, System::Object^ surface)
 	{
 		try
 		{
 			if (NULL != arrFaceProxies && NULL != surface && NULL != m_pIwObj)
 			{
-				SMObject __gc *smObj = dynamic_cast<SMObject *> (surface);
+				SMObject^ smObj = dynamic_cast<SMObject *> (surface);
 				if (NULL != smObj)
 				{
 					((IwBrep *) m_pIwObj)->m_bEditingEnabled = TRUE;
@@ -1381,7 +1381,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::ReplaceSurface (BrepFaceProxy __gc *face, NurbsSurface __gc *surface, bool bCreateTrimCurves)
+	void Brep::ReplaceSurface (BrepFaceProxy^ face, NurbsSurface^ surface, bool bCreateTrimCurves)
 	{
 		try
 		{
@@ -1425,7 +1425,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBrepFromRegion (BrepRegionProxy __gc *regionProxy, Brep __gc *destBrep)
+	void Brep::CreateBrepFromRegion (BrepRegionProxy^ regionProxy, Brep^ destBrep)
 	{
 		IwBrep *destIwBrep = 0;
 		IwRegion *regionToCopy = 0;
@@ -1470,7 +1470,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateFromNurbsSurface (NurbsSurface __gc * oSurface)
+	void Brep::CreateFromNurbsSurface (NurbsSurface^  oSurface)
 	{
 
 		IwBSplineSurface *pSrf = 0;
@@ -1517,7 +1517,7 @@ namespace PESMLIB
 		}
 	}
 
-	bool Brep::JoinBreps (Brep* vecBreps __gc[])
+bool Brep::JoinBreps (cli::array<Brep^>^ vecBreps)
 	{
 
 		try
@@ -1613,7 +1613,7 @@ namespace PESMLIB
 					sStatus = ((IwBrep *) m_pIwObj)->TurnToNURBS();
 					if (sStatus != IW_SUCCESS)
 					{
-						String __gc* sInfo = "Failed to convert brep geometry to NURBS.";
+						String^  sInfo = "Failed to convert brep geometry to NURBS.";
 						System::Windows::Forms::MessageBox::Show(sInfo);
 					}
 				}
@@ -1623,7 +1623,7 @@ namespace PESMLIB
 				sStatus =((IwBrep *) m_pIwObj)->Transform(*pAxis, pVecScale);
 				if (sStatus != IW_SUCCESS)
 				{
-					String __gc* sInfo = "Scaling of brep failed.";
+					String^  sInfo = "Scaling of brep failed.";
 					System::Windows::Forms::MessageBox::Show(sInfo);
 				}
 
@@ -1655,7 +1655,7 @@ namespace PESMLIB
 				sStatus =((IwBrep *) m_pIwObj)->Transform(*pAxis, pVecScale);
 				if (sStatus != IW_SUCCESS)
 				{
-					String __gc* sInfo = "Translation of brep failed.";
+					String^  sInfo = "Translation of brep failed.";
 					System::Windows::Forms::MessageBox::Show(sInfo);
 				}
 
@@ -1691,7 +1691,7 @@ namespace PESMLIB
 				sStatus =((IwBrep *) m_pIwObj)->Transform(*pAxis, pVecScale);
 				if (sStatus != IW_SUCCESS)
 				{
-					String __gc* sInfo = "Rotation of brep failed.";
+					String^  sInfo = "Rotation of brep failed.";
 					System::Windows::Forms::MessageBox::Show(sInfo);
 				}
 
@@ -1725,7 +1725,7 @@ namespace PESMLIB
 				sStatus =((IwBrep *) m_pIwObj)->Transform(*pAxis, pVecScale);
 				if (sStatus != IW_SUCCESS)
 				{
-					String __gc* sInfo = "Rotation of brep failed.";
+					String^  sInfo = "Rotation of brep failed.";
 					System::Windows::Forms::MessageBox::Show(sInfo);
 				}
 
@@ -1841,7 +1841,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBrepFromRegionsSlow (System::Collections::ArrayList __gc *listRegions, bool bRemoveFromOriginal)
+	void Brep::CreateBrepFromRegionsSlow (System::Collections::ArrayList^ listRegions, bool bRemoveFromOriginal)
 	{
 		try
 		{
@@ -1951,7 +1951,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBrepFromFace (BrepFaceProxy __gc *face)
+	void Brep::CreateBrepFromFace (BrepFaceProxy^ face)
 	{
 		IwTArray<IwFace *> arrFacesToCopy;
 		IwBrep * pThisBrep = (IwBrep *) GetIwObj();
@@ -1975,7 +1975,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBrepFromRegions (System::Collections::ArrayList __gc *listRegions, bool bRemoveFromOriginal)
+	void Brep::CreateBrepFromRegions (System::Collections::ArrayList^ listRegions, bool bRemoveFromOriginal)
 	{
 		// This routine copies all of the regions in the region list into this brep. It is assumed that the
 		// input regions in listRegions are all from the same brep. Any that are not from the same brep as
@@ -2090,7 +2090,7 @@ namespace PESMLIB
 		}
 	}
 
-	bool  Brep::MergeBreps (Brep* brepResult, Brep* vecBreps __gc[], BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold)
+bool  Brep::MergeBreps (Brep* brepResult, cli::array<Brep^>^ vecBreps, BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold)
 	{
 		bool bRet = true;
 
@@ -2218,7 +2218,7 @@ namespace PESMLIB
 
 
 
-	bool  Brep::NonManifoldMergeBreps (Brep* brepResult, Brep* vecBreps __gc[], BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold)
+bool  Brep::NonManifoldMergeBreps (Brep* brepResult, cli::array<Brep^>^ vecBreps, BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold)
 	{
 		bool bRet = true;
 
@@ -2325,7 +2325,7 @@ namespace PESMLIB
 	}
 
 
-	void Brep::CreateBoundedPlane (Plane __gc *newPlane, Vector3d __gc *ptMin, Vector3d __gc *ptMax)
+	void Brep::CreateBoundedPlane (Plane^ newPlane, Vector3d^ ptMin, Vector3d^ ptMax)
 	{
 		// Create a face from a plane with bounds. newPlane gets consumed.
 
@@ -2345,7 +2345,7 @@ namespace PESMLIB
 		oBox.SetMinMax (*(ptMin->GetIwObj ()), *(ptMax->GetIwObj ()));
 		double dPad = oBox.GetSize ().Length () / 10.;
 		oBox.ExpandAbsolute (dPad);
-		String __gc *sId = newPlane->GetIwObjAttribute();
+		String^ sId = newPlane->GetIwObjAttribute();
 		IwPlane *pPlane = (IwPlane *) newPlane->ExtractIwObj ();
 		if (pPlane)
 		{
@@ -2414,7 +2414,7 @@ namespace PESMLIB
 	}
 
 
-	void Brep::CreateConePatch (Vector3d __gc * ptOrigin, Vector3d __gc * vecAxis, 
+	void Brep::CreateConePatch (Vector3d^  ptOrigin, Vector3d^  vecAxis, 
 		double dBottomRadius, double dTopRadius, double dHeight, bool bCapped)
 	{
 
@@ -2556,7 +2556,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateSphere (Vector3d __gc * ptOrigin, Vector3d __gc * vecAxis, double dRadius)
+	void Brep::CreateSphere (Vector3d^  ptOrigin, Vector3d^  vecAxis, double dRadius)
 	{
 
 		if (m_pIwObj == NULL || m_pXMLElem == NULL)
@@ -2609,7 +2609,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBilinearPatch (Vector3d __gc * ptU0V0, Vector3d __gc * ptU1V0, Vector3d __gc * ptU0V1, Vector3d __gc * ptU1V1)
+	void Brep::CreateBilinearPatch (Vector3d^  ptU0V0, Vector3d^  ptU1V0, Vector3d^  ptU0V1, Vector3d^  ptU1V1)
 	{
 
 		if (m_pIwObj == NULL || m_pXMLElem == NULL)
@@ -2666,7 +2666,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::CreateBox (Vector3d __gc * ptMin, Vector3d __gc * ptMax)
+	void Brep::CreateBox (Vector3d^  ptMin, Vector3d^  ptMax)
 	{
 
 		if (m_pIwObj == NULL || m_pXMLElem == NULL)
@@ -2848,7 +2848,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::BoundPlane (Plane __gc *plane)
+	void Brep::BoundPlane (Plane^ plane)
 	{
 		try
 		{
@@ -2915,13 +2915,13 @@ namespace PESMLIB
 		}
 	}
 
-	System::Collections::ArrayList __gc * Brep::InsertInternalPlane (Plane __gc * oPlane)
+	System::Collections::ArrayList^  Brep::InsertInternalPlane (Plane^  oPlane)
 	{
 		// This routine returns a collection of face proxies representing the newly created faces
 		// associated with the input plane. It does not include any subdivided faces created from
 		// faces already existing in the Brep.
 
-		System::Collections::ArrayList __gc *arrFaceProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrFaceProxies = new System::Collections::ArrayList ();
 
 		try
 		{
@@ -2938,7 +2938,7 @@ namespace PESMLIB
 
 			IwBrep *pResult = 0;
 			IwFace *pNewFace = 0;
-			String __gc * sGuid = 0;
+			String^  sGuid = 0;
 
 			IwExtent3d oBox;
 			((IwBrep *) m_pIwObj)->CalculateBoundingBox (oBox);
@@ -3067,7 +3067,7 @@ namespace PESMLIB
 						if (pExistingAttribute->GetNumCharacterElements () > 0)
 						{
 							const char *pcElements = pExistingAttribute->GetCharacterElementsAddress ();
-							System::String __gc *sAttribute = new System::String (pcElements);
+							System::String^ sAttribute = new System::String (pcElements);
 							int iObj = sAttribute->IndexOf (sGuid);
 							if (iObj >= 0)
 							{
@@ -3252,7 +3252,7 @@ namespace PESMLIB
 	//	RemoveGraphics(segKey, m_hkFaces, m_hkEdges);
 	//}
 
-	//void Brep::RemoveGraphics (KEY segKey, System::Collections::ArrayList __gc *hkFaces, System::Collections::ArrayList __gc *hkEdges)
+	//void Brep::RemoveGraphics (KEY segKey, System::Collections::ArrayList^ hkFaces, System::Collections::ArrayList^ hkEdges)
 	//{
 	//	// Flush the contents of the segment. It is the callers responsibility to create
 	//	// or delete the containing segment.
@@ -3268,10 +3268,10 @@ namespace PESMLIB
 	//{
 	//	if (eFeature == BrepFeatureType::Brep_Face)
 	//	{
-	//		BrepFaceProxy __gc *pFace = GetFace (faceID);
+	//		BrepFaceProxy^ pFace = GetFace (faceID);
 	//		if (NULL != pFace)
 	//		{
-	//			System::Object __gc *oAttrib = pFace->FindAttribute( AttributeID_HKEY);
+	//			System::Object^ oAttrib = pFace->FindAttribute( AttributeID_HKEY);
 	//			if (oAttrib != NULL)
 	//			{
 	//				System::Int32 *pkey = dynamic_cast<System::Int32 *>(oAttrib);
@@ -3297,7 +3297,7 @@ namespace PESMLIB
 	//	}
 	//}
 
-	void Brep::DeleteFaces (System::Collections::ArrayList __gc *arrFaceIDs)
+	void Brep::DeleteFaces (System::Collections::ArrayList^ arrFaceIDs)
 	{
 		try
 		{
@@ -3339,7 +3339,7 @@ namespace PESMLIB
 
 				// Fire invalidated event
 
-				BrepEventArgs __gc *eventArgs = new BrepEventArgs ();
+				BrepEventArgs^ eventArgs = new BrepEventArgs ();
 				this->BrepChanged (this, eventArgs);
 			}
 		}
@@ -3365,7 +3365,7 @@ namespace PESMLIB
 
 	}
 
-	void Brep::CreatePlanarSections(Plane* vecPlanes __gc[], System::Collections::ArrayList& vecCurves, bool bConnectDisjointCurves)
+void Brep::CreatePlanarSections(cli::array<Plane^>^ vecPlanes, System::Collections::ArrayList^ vecCurves, bool bConnectDisjointCurves)
 	{
 		// Create planar sections computes planar curves cut through this brep by intersecting
 		// with the input plane collection. For each plane, the intersection can be a single NURBS
@@ -3419,7 +3419,7 @@ namespace PESMLIB
 						}
 						else // create composite curve with unique curves
 						{
-							System::Collections::ArrayList __gc *arrNurbsCurves = new ArrayList ();
+							System::Collections::ArrayList^ arrNurbsCurves = new ArrayList ();
 							double dMaxDistance = Tolerance;
 							double dMaxDistFound;
 
@@ -3458,7 +3458,7 @@ namespace PESMLIB
 							double dDistToCreateLine = 0.0; // do not connect disjoint curve segments
 							if (bConnectDisjointCurves)
 								dDistToCreateLine = 1000.0; // intended to connect disjoint curve segments
-							System::Collections::ArrayList __gc *vecStationCurves = new System::Collections::ArrayList ();
+							System::Collections::ArrayList^ vecStationCurves = new System::Collections::ArrayList ();
 							CompositeCurve::BuildCompositesFromCurves (m_pContext, NULL,
 								arrNurbsCurves, bMakeHomogeneous, dSamePtTol, dDistToCreateLine,
 								vecStationCurves);
@@ -3605,7 +3605,7 @@ namespace PESMLIB
 			return;
 		}
 	}
-	XML::XmlDocumentFragment __gc * Brep::GetSurfaceShell(double dChordHeightTol, double dAngleTolInDegrees, 
+	XML::XmlDocumentFragment^  Brep::GetSurfaceShell(double dChordHeightTol, double dAngleTolInDegrees, 
 		double dMax3DEdgeLength, double dMaxAspectRatio, double dMinUVRatio)
 	{
 
@@ -3669,9 +3669,9 @@ namespace PESMLIB
 		}
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetRegionsFromFace (HC::KEY hkFace)
+	System::Collections::ArrayList^  Brep::GetRegionsFromFace (HC::KEY hkFace)
 	{
-		System::Collections::ArrayList __gc *arrRegionProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrRegionProxies = new System::Collections::ArrayList ();
 
 		if (m_pIwObj != NULL)
 		{
@@ -3709,7 +3709,7 @@ namespace PESMLIB
 										if (pRegionAttribute && pRegionAttribute->GetNumLongElements () > 0)
 										{
 											const long *lRegionIDs = pRegionAttribute->GetLongElementsAddress ();
-											BrepRegionProxy __gc *regionProxy = 
+											BrepRegionProxy^ regionProxy = 
 												new BrepRegionProxy (m_pContext, this, lRegionIDs[0]);
 											arrRegionProxies->Add (regionProxy);
 										}
@@ -3726,7 +3726,7 @@ namespace PESMLIB
 		return arrRegionProxies;
 	}
 
-	BrepRegionProxy __gc * Brep::GetInfiniteRegion ()
+	BrepRegionProxy^  Brep::GetInfiniteRegion ()
 	{
 		try
 		{
@@ -3745,12 +3745,12 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetRegions ()
+	System::Collections::ArrayList^  Brep::GetRegions ()
 	{
 		// It is assumed that the regions returned here do not include the infinite region. There is
 		// a method GetInfiniteRegion if that region is desired.
 
-		System::Collections::ArrayList __gc *arrRegionProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrRegionProxies = new System::Collections::ArrayList ();
 
 		try
 		{
@@ -3786,14 +3786,14 @@ namespace PESMLIB
 		return arrRegionProxies;
 	}
 
-	BrepRegionProxy __gc * Brep::GetRegion(long iRegionId)
+	BrepRegionProxy^  Brep::GetRegion(long iRegionId)
 	{
 		try
 		{
 			IwRegion *pIwRegion = GetIwRegionFromID (iRegionId);
 			if (pIwRegion)
 			{
-				BrepRegionProxy __gc *regionProxy = new BrepRegionProxy (
+				BrepRegionProxy^ regionProxy = new BrepRegionProxy (
 					m_pContext, this, iRegionId);
 				return regionProxy;
 			}
@@ -3805,7 +3805,7 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	IwFace * Brep::GetIwFaceFromProxy (BrepFaceProxy __gc *faceProxy)
+	IwFace * Brep::GetIwFaceFromProxy (BrepFaceProxy^ faceProxy)
 	{
 		IwFace *pIwFace = NULL;
 
@@ -3841,7 +3841,7 @@ namespace PESMLIB
 		return pIwFace;
 	}
 
-	void Brep::LocalOperation (ArrayList __gc *arrFaces, ArrayList __gc *arrSurfaces)
+	void Brep::LocalOperation (ArrayList^ arrFaces, ArrayList^ arrSurfaces)
 	{
 		try
 		{
@@ -3880,9 +3880,9 @@ namespace PESMLIB
 		}
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetFacesOfSurface (System::Object __gc *surface)
+	System::Collections::ArrayList^  Brep::GetFacesOfSurface (System::Object^ surface)
 	{
-		System::Collections::ArrayList __gc *arrFaceProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrFaceProxies = new System::Collections::ArrayList ();
 
 		try
 		{
@@ -3890,7 +3890,7 @@ namespace PESMLIB
 			{
 				IwTArray<IwFace *> arrFacesOfSurface;
 				IwSurface *pSurface = 0;
-				SMObject __gc *smObj = dynamic_cast<SMObject *> (surface);
+				SMObject^ smObj = dynamic_cast<SMObject *> (surface);
 				if (NULL != smObj)
 				{
 					pSurface = (IwSurface *) smObj->GetIwObj ();
@@ -3935,9 +3935,9 @@ namespace PESMLIB
 		return arrFaceProxies;
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetFaces ()
+	System::Collections::ArrayList^  Brep::GetFaces ()
 	{
-		System::Collections::ArrayList __gc *arrFaceProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrFaceProxies = new System::Collections::ArrayList ();
 
 		if (m_pIwObj != NULL)
 		{
@@ -3962,9 +3962,9 @@ namespace PESMLIB
 		return arrFaceProxies;
 	}
 
-	BrepFaceProxy __gc * Brep::GetFace(long iFaceId)
+	BrepFaceProxy^  Brep::GetFace(long iFaceId)
 	{
-		System::Collections::ArrayList __gc * arrFaceProxies = this->GetFaces();
+		System::Collections::ArrayList^  arrFaceProxies = this->GetFaces();
 		for (int i = 0; i < arrFaceProxies->Count; i++)
 		{
 			BrepFaceProxy *face = __try_cast<BrepFaceProxy *> (arrFaceProxies->get_Item(i));
@@ -3974,7 +3974,7 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	BrepFaceProxy __gc * Brep::GetFace (HC::KEY hkFace)
+	BrepFaceProxy^  Brep::GetFace (HC::KEY hkFace)
 	{
 		// Find the face with the specified hkFace
 		if (NULL != m_pIwObj)
@@ -4008,9 +4008,9 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	System::Collections::ArrayList __gc * Brep::GetEdges ()
+	System::Collections::ArrayList^  Brep::GetEdges ()
 	{
-		System::Collections::ArrayList __gc *arrEdgeProxies = new System::Collections::ArrayList ();
+		System::Collections::ArrayList^ arrEdgeProxies = new System::Collections::ArrayList ();
 
 		if (m_pIwObj != NULL)
 		{
@@ -4037,9 +4037,9 @@ namespace PESMLIB
 		return arrEdgeProxies;
 	}
 
-	BrepEdgeProxy __gc * Brep::GetEdge(long iEdgeId)
+	BrepEdgeProxy^  Brep::GetEdge(long iEdgeId)
 	{
-		System::Collections::ArrayList __gc * arrEdgeProxies = this->GetEdges();
+		System::Collections::ArrayList^  arrEdgeProxies = this->GetEdges();
 		for (int i = 0; i < arrEdgeProxies->Count; i++)
 		{
 			BrepEdgeProxy *edge = __try_cast<BrepEdgeProxy *> (arrEdgeProxies->get_Item(i));
@@ -4049,7 +4049,7 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	BrepEdgeProxy __gc * Brep::GetEdge (HC::KEY hkEdge)
+	BrepEdgeProxy^  Brep::GetEdge (HC::KEY hkEdge)
 	{
 		// Find the edge with the specified hkEdge
 		if (NULL != m_pIwObj)
@@ -4081,7 +4081,7 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	BrepRegionProxy __gc * Brep::RegionContainingPoint(Vector3d *pTest)
+	BrepRegionProxy^  Brep::RegionContainingPoint(Vector3d *pTest)
 	{
 		IwBrep *pBrep = (IwBrep *)this->GetIwObj();
 		IwPoint3d* ptTest = (IwVector3d *) pTest->GetIwObj();
@@ -4112,7 +4112,7 @@ namespace PESMLIB
 		return NULL;
 	}
 	//void Brep::Tesselation (HC::KEY keyGeom,bool bDrawDetailed,double dMaxAspectRatio,double dMax3DEdgeLength,
-	//	XML::XmlDocument __gc * pXMLDoc,XML::XmlElement __gc * pXMLRootElm)
+	//	XML::XmlDocument^  pXMLDoc,XML::XmlElement^  pXMLRootElm)
 	//{
 
 	//	try
@@ -4286,23 +4286,23 @@ namespace PESMLIB
 	//			delete []shell_points;
 	//			//add2dom
 	//			{
-	//				XML::XmlElement __gc *pXMLElmClass=pXMLDoc->CreateElement("Class");
+	//				XML::XmlElement^ pXMLElmClass=pXMLDoc->CreateElement("Class");
 	//				pXMLRootElm->AppendChild(pXMLElmClass);
 	//				pXMLElmClass->SetAttribute ("sName", "FeModel");
 	//				pXMLElmClass->SetAttribute ("sInterfaces", "IPHGeometry");
 	//				pXMLElmClass->SetAttribute ("sNamespace", "VEDM.Apps.CSafe");
-	//				XML::XmlElement __gc *pXMLElmInstances=pXMLDoc->CreateElement("Instances");
+	//				XML::XmlElement^ pXMLElmInstances=pXMLDoc->CreateElement("Instances");
 	//				pXMLElmClass->AppendChild(pXMLElmInstances);
-	//				XML::XmlElement __gc *pXMLElmFeModel=pXMLDoc->CreateElement("FeModel");
+	//				XML::XmlElement^ pXMLElmFeModel=pXMLDoc->CreateElement("FeModel");
 	//				pXMLElmInstances->AppendChild(pXMLElmFeModel);
 	//				pXMLElmFeModel->SetAttribute ("idSelf", Guid::NewGuid().ToString("B"));
 	//				//Nodes
-	//				XML::XmlElement __gc *pXMLElmNodes=pXMLDoc->CreateElement("Nodes");
+	//				XML::XmlElement^ pXMLElmNodes=pXMLDoc->CreateElement("Nodes");
 	//				pXMLElmFeModel->AppendChild(pXMLElmNodes);
 	//				for (itMap  = mapNode.begin(); itMap != mapNode.end();itMap++)
 	//				{
 	//					SMPoint* pNode = itMap->second;
-	//					XML::XmlElement __gc *pXMLElmNode=pXMLDoc->CreateElement("Node");
+	//					XML::XmlElement^ pXMLElmNode=pXMLDoc->CreateElement("Node");
 	//					pXMLElmNode->SetAttribute ("iId", pNode->m_Id.ToString());
 	//					pXMLElmNode->SetAttribute ("dX", pNode->m_x.ToString());
 	//					pXMLElmNode->SetAttribute ("dY", pNode->m_y.ToString());
@@ -4310,7 +4310,7 @@ namespace PESMLIB
 	//					pXMLElmNodes->AppendChild(pXMLElmNode);
 	//				}
 	//				//Element
-	//				XML::XmlElement __gc *pXMLElmElements=pXMLDoc->CreateElement("Elements");
+	//				XML::XmlElement^ pXMLElmElements=pXMLDoc->CreateElement("Elements");
 	//				pXMLElmFeModel->AppendChild(pXMLElmElements);
 	//				long elmId=0;
 	//				char buf[128];
@@ -4321,7 +4321,7 @@ namespace PESMLIB
 	//					if (pElm->m_Nd[3]==-1)
 	//					{
 	//						sprintf(buf,"%d %d %d",pElm->m_Nd[0],pElm->m_Nd[1],pElm->m_Nd[2]);
-	//						XML::XmlElement __gc *pXMLElmTri=pXMLDoc->CreateElement("Tri");
+	//						XML::XmlElement^ pXMLElmTri=pXMLDoc->CreateElement("Tri");
 	//						pXMLElmTri->SetAttribute ("iId", elmId.ToString());
 	//						pXMLElmTri->SetAttribute ("sNodeIds", buf);
 	//						pXMLElmTri->SetAttribute ("iIdProp", "abc");
@@ -4330,7 +4330,7 @@ namespace PESMLIB
 	//					else
 	//					{
 	//						sprintf(buf,"%d %d %d %d",pElm->m_Nd[0],pElm->m_Nd[1],pElm->m_Nd[2],pElm->m_Nd[3]);
-	//						XML::XmlElement __gc *pXMLElmQuad=pXMLDoc->CreateElement("Quad");
+	//						XML::XmlElement^ pXMLElmQuad=pXMLDoc->CreateElement("Quad");
 	//						pXMLElmQuad->SetAttribute ("iId", elmId.ToString());
 	//						pXMLElmQuad->SetAttribute ("sNodeIds", buf);
 	//						pXMLElmQuad->SetAttribute ("iIdProp", "abc");
@@ -4364,7 +4364,7 @@ namespace PESMLIB
 	//		// TODO
 	//	}
 	//}
-	void Brep::AssignPropertyAttribute (String __gc * sName)
+	void Brep::AssignPropertyAttribute (String^  sName)
 	{
 		IwBrep* pIwBrep=(IwBrep *) m_pIwObj;
 		IwAttribute *pExistingAttribute = pIwBrep->FindAttribute (AttributeID_PROPERTY);
@@ -4391,7 +4391,7 @@ namespace PESMLIB
 		}
 	}
 
-	IwEdge * Brep::GetIwEdgeFromProxy (BrepEdgeProxy __gc *edgeProxy)
+	IwEdge * Brep::GetIwEdgeFromProxy (BrepEdgeProxy^ edgeProxy)
 	{
 		IwEdge *pIwEdge = NULL;
 
@@ -4427,7 +4427,7 @@ namespace PESMLIB
 		return pIwEdge;
 	}
 
-	void Brep::MergeEdges(BrepEdgeProxy __gc* edge1, BrepEdgeProxy __gc* edge2)
+	void Brep::MergeEdges(BrepEdgeProxy^  edge1, BrepEdgeProxy^  edge2)
 	{
 		IwVertex *pDeleteVertex = NULL;
 		IwTArray<IwEdge *> pEdges;
@@ -4486,20 +4486,20 @@ namespace PESMLIB
 		}
 	}
 
-	void Brep::RemoveEdge(BrepEdgeProxy __gc* edge)
+	void Brep::RemoveEdge(BrepEdgeProxy^  edge)
 	{
-		System::Collections::ArrayList __gc* delEdges = new System::Collections::ArrayList();
+		System::Collections::ArrayList^  delEdges = new System::Collections::ArrayList();
 		delEdges->Add(edge);
 		RemoveEdges(delEdges);
 	}
 
-	void Brep::RemoveEdges(System::Collections::ArrayList __gc* delEdges)
+	void Brep::RemoveEdges(System::Collections::ArrayList^  delEdges)
 	{
 		// Create a list of underlying edges
 		IwTArray<IwEdge *> arrEdges;
 		for(int iEdge = 0; iEdge < delEdges->Count; iEdge++)
 		{
-			BrepEdgeProxy __gc *edge = static_cast<BrepEdgeProxy __gc *>(delEdges->get_Item(iEdge));
+			BrepEdgeProxy^ edge = static_cast<BrepEdgeProxy^ >(delEdges->get_Item(iEdge));
 			IwEdge *pEdge = this->GetIwEdgeFromProxy(edge);
 			arrEdges.Add(pEdge);
 		}

@@ -7,7 +7,7 @@ using namespace Utilities;
 
 namespace PESMLIB
 {
-	__gc public class Extent3d: public PersistObject
+	public ref class Extent3d: public PersistObject
 	{
 	public:
 		Extent3d(void);
@@ -22,18 +22,18 @@ namespace PESMLIB
       void Init ();
       void Union (Extent3d& extOther, Extent3d& extResult);
 
-		static Extent3d __gc * Parse (System::String __gc *sExtent);
-		System::String __gc * ToString ();
+		static Extent3d^  Parse (System::String^ sExtent);
+		System::String^  ToString ();
 
 		// Public properties
-      __property virtual PESMLIB::Vector3d __gc * get_Min ();
+      __property virtual PESMLIB::Vector3d^  get_Min ();
       [NotifyParentPropertyAttribute(true), RefreshPropertiesAttribute(RefreshProperties::Repaint),
 			Description("X coordinate of vector"), FormatStringAttribute("#0.000")]
-		__property virtual void set_Min (Vector3d __gc *pVec) ;
-      __property virtual PESMLIB::Vector3d __gc * get_Max ();
+		__property virtual void set_Min (Vector3d^ pVec) ;
+      __property virtual PESMLIB::Vector3d^  get_Max ();
 		[NotifyParentPropertyAttribute(true), RefreshPropertiesAttribute(RefreshProperties::Repaint),
 			Description("Y coordinate of vector"), FormatStringAttribute("#0.000")]
-		__property virtual void set_Max (Vector3d __gc *pVec);
+		__property virtual void set_Max (Vector3d^ pVec);
 		__event System::EventHandler *Changed;
 	public protected:
 		virtual IwExtent3d * ExtractObj ();
@@ -48,13 +48,13 @@ namespace PESMLIB
 //		XML::XmlElement* m_pXMLElem;
 	};
 
-	__gc public class Extent3dConverter: public Utilities::PropertiesDeluxeTypeConverter
+	public ref class Extent3dConverter: public Utilities::PropertiesDeluxeTypeConverter
 	{
 	public:
 		bool CanConvertFrom(ITypeDescriptorContext *context, Type *sourceType);
-		System::Object __gc * ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
+		System::Object^  ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
 		bool CanConvertTo(ITypeDescriptorContext *context, Type *destinationType);
-		System::Object __gc * ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
+		System::Object^  ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
 		bool GetPropertiesSupported(ITypeDescriptorContext *context);
 	};
 }

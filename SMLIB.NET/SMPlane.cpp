@@ -4,7 +4,7 @@ using namespace System::Text;
 
 namespace PESMLIB
 {
-	Plane::Plane(Context __gc * oContext, XML::XmlElement __gc * pElem) : SMObject()
+	Plane::Plane(Context^  oContext, XML::XmlElement^  pElem) : SMObject()
 	{
 		m_pContext = oContext;
 		if (HasIwContext())
@@ -42,7 +42,7 @@ namespace PESMLIB
 	{
 	}
 
-	int Plane::CompareTo (System::Object __gc *obj)
+	int Plane::CompareTo (System::Object^ obj)
 	{
 		try
 		{
@@ -77,7 +77,7 @@ namespace PESMLIB
 		return 1;
 	}
 
-	bool Plane::Equals (System::Object __gc * obj)
+	bool Plane::Equals (System::Object^  obj)
 	{
 		try
 		{
@@ -126,7 +126,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Plane::GetCanonical (Axis2Placement __gc *axis2p)
+	void Plane::GetCanonical (Axis2Placement^ axis2p)
 	{
 		try
 		{
@@ -154,7 +154,7 @@ namespace PESMLIB
 		}
 	}
 
-   void Plane::GetCanonical (Vector3d __gc * oOrigin, Vector3d __gc * oNormal)
+   void Plane::GetCanonical (Vector3d^  oOrigin, Vector3d^  oNormal)
    {
       try
       {
@@ -203,7 +203,7 @@ namespace PESMLIB
 			}
 		}
 	}
-	void Plane::SetCanonical (Axis2Placement __gc *axis2p)
+	void Plane::SetCanonical (Axis2Placement^ axis2p)
 	{
 		if (HasIwContext())
 		{
@@ -228,7 +228,7 @@ namespace PESMLIB
 		}
 	}
 
-	void Plane::Copy (Plane __gc * srcPlane)
+	void Plane::Copy (Plane^  srcPlane)
    {
       try
       {
@@ -277,9 +277,9 @@ namespace PESMLIB
       }
    }
 
-   NurbsSurface __gc * Plane::GetNurbsSurface ()
+   NurbsSurface^  Plane::GetNurbsSurface ()
    {
-      NurbsSurface __gc *nurbsSurface = NULL;
+      NurbsSurface^ nurbsSurface = NULL;
       try
       {
          IwPlane *pPlane = (IwPlane *) m_pIwObj;
@@ -328,7 +328,7 @@ namespace PESMLIB
 
    // IGeometry interface member implementation
 
- //  void Plane::Transform (PEHoops::MVO::Transformation __gc * oTransformation)
+ //  void Plane::Transform (PEHoops::MVO::Transformation^  oTransformation)
 	//{
  //     try
  //     {
@@ -344,13 +344,13 @@ namespace PESMLIB
  //           pSurface->Transform (crRotateNMove, NULL);
  //        }
  //     }
- //     catch (System::Exception __gc *ex)
+ //     catch (System::Exception^ ex)
  //     {
  //        System::Console::WriteLine (ex->Message);
  //     }
 	//}
 
-	bool Plane::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	bool Plane::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
 	{
       // TODO
 		bool bRet = false;
@@ -403,7 +403,7 @@ namespace PESMLIB
 	//	HC::Close_Segment ();
 	}
 
-	System::Object __gc * Plane::GetReferencableObject ()
+	System::Object^  Plane::GetReferencableObject ()
 	{
 		return this;
 	}

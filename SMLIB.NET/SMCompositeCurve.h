@@ -8,7 +8,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace PESMLIB
 {
-	__gc public class CompositeCurve :	public SMObject
+	public ref class CompositeCurve :	public SMObject
 	{
 	public:
 		CompositeCurve();
@@ -16,15 +16,15 @@ namespace PESMLIB
 		virtual ~CompositeCurve();
 
 	  void ReverseParameterization ();
-      Extent1d __gc * GetNaturalInterval ();
-      void Tessellate(Extent1d __gc *extInterval, double dChordHeightTolerance, double dAngleToleranceDeg,
-         ULONG lMinimumNumberOfSegments, System::Collections::ArrayList __gc *parameters,
-         System::Collections::ArrayList __gc * points);
+      Extent1d^  GetNaturalInterval ();
+      void Tessellate(Extent1d^ extInterval, double dChordHeightTolerance, double dAngleToleranceDeg,
+         ULONG lMinimumNumberOfSegments, System::Collections::ArrayList^ parameters,
+         System::Collections::ArrayList^  points);
       long GetNumSegments ();
-      NurbsCurve __gc * GetCurveSegment (int iSeg);
-      static void BuildCompositesFromCurves (Context __gc *pContext, XML::XmlElement *pXMLElem, 
-         System::Collections::ArrayList __gc *arrNurbsCurves, bool bMakeHomogeneous,
-         double dSamePtTol, double dDistToCreateLine, System::Collections::ArrayList __gc *arrComposites);
+      NurbsCurve^  GetCurveSegment (int iSeg);
+      static void BuildCompositesFromCurves (Context^ pContext, XML::XmlElement *pXMLElem, 
+         System::Collections::ArrayList^ arrNurbsCurves, bool bMakeHomogeneous,
+         double dSamePtTol, double dDistToCreateLine, System::Collections::ArrayList^ arrComposites);
 
 	public private:
 		virtual void AttachIwObj (Context *pContext, IwObject *);

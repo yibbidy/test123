@@ -16,11 +16,11 @@ using namespace Utilities;
 
 namespace PESMLIB
 {
-	__gc public class BrepRegionProxy;
-	__gc public class BrepFaceProxy;
-	__gc public class BrepEdgeProxy;
+	public ref class BrepRegionProxy;
+	public ref class BrepFaceProxy;
+	public ref class BrepEdgeProxy;
 
-	__value public enum BooleanMergeType 
+       public enum class BooleanMergeType
 	{
 		BooleanMerge_Union = 0,
 		BooleanMerge_Intersection = 1,
@@ -29,7 +29,7 @@ namespace PESMLIB
 		BooleanMerge_PartialMerge = 4
 	};
 
-	public __gc class BrepEventArgs: public System::EventArgs 
+	public ref class BrepEventArgs: public System::EventArgs 
 	{
 	public:
 		BrepEventArgs() 
@@ -38,19 +38,19 @@ namespace PESMLIB
 			this->arrFaces = NULL;
 			this->arrEdges = NULL;
 		}
-		System::Collections::ArrayList __gc *arrRegions;
-		System::Collections::ArrayList __gc *arrFaces;
-		System::Collections::ArrayList __gc *arrEdges;
-		//System::Collections::ArrayList __gc *arrVertices
+		System::Collections::ArrayList^ arrRegions;
+		System::Collections::ArrayList^ arrFaces;
+		System::Collections::ArrayList^ arrEdges;
+		//System::Collections::ArrayList^ arrVertices
 	};    //end of class BrepEventArgs
 
 	[event_source(managed)]
-	__gc public class Brep : public SMObject, public VEDM::Windows::IGeometry, public IComparable
+	public ref class Brep : public SMObject, public VEDM::Windows::IGeometry, public IComparable
 	{
 	public:
-		__delegate void BrepChangedEventHandler(Object* sender, BrepEventArgs __gc *eventArgs);
-		__event BrepChangedEventHandler __gc *BrepChanged;
-		__value enum BrepFeatureType
+		__delegate void BrepChangedEventHandler(Object* sender, BrepEventArgs^ eventArgs);
+		__event BrepChangedEventHandler^ BrepChanged;
+               enum class BrepFeatureType
 		{
 			Brep_Region = 0,
 			Brep_Face = 1,
@@ -59,12 +59,12 @@ namespace PESMLIB
 		};
 
 		Brep(void);
-		Brep (Context __gc * oContext, XML::XmlElement __gc * pElem);
+		Brep (Context^  oContext, XML::XmlElement^  pElem);
 		virtual ~Brep(void);
 
-		void ValidateTolerances (bool bValidateOnly, System::Boolean __gc *pbTolUpdated, 
-			System::Double __gc *pdMaxEdgeUVTrimCurveGap, System::Double __gc *pdMaxVertexEdgeGap, 
-			System::Double __gc *pdMaxVertexFaceGap)
+		void ValidateTolerances (bool bValidateOnly, System::Boolean^ pbTolUpdated, 
+			System::Double^ pdMaxEdgeUVTrimCurveGap, System::Double^ pdMaxVertexEdgeGap, 
+			System::Double^ pdMaxVertexFaceGap)
 		{
 			try
 			{
@@ -95,7 +95,7 @@ namespace PESMLIB
 			}
 		}
 
-		static void Read3DM (System::String __gc *sFilename, Context __gc *context, System::Collections::ArrayList __gc *arrBreps)
+		static void Read3DM (System::String^ sFilename, Context^ context, System::Collections::ArrayList^ arrBreps)
 		{
 /*			IwStatus sStatus;
 			HwHeaderInfo hw_header;
@@ -162,7 +162,7 @@ namespace PESMLIB
 			
 			for (unsigned int iBrep = 0; iBrep < arrIwBreps.GetSize (); iBrep++)
 			{
-				Brep __gc *pBrep = new Brep (context, NULL);
+				Brep^ pBrep = new Brep (context, NULL);
 				IwBrep * pIwBrep = arrIwBreps[iBrep];
 
 				// This seems like a good idea but seems to fail on certain breps throwing an exception and then
@@ -180,7 +180,7 @@ namespace PESMLIB
 			}*/
 		}
 
-		static void ReadIGES (System::String __gc *sFilename, Context __gc *context, System::Collections::ArrayList __gc *arrBreps)
+		static void ReadIGES (System::String^ sFilename, Context^ context, System::Collections::ArrayList^ arrBreps)
 		{
 			IwStatus sStatus;
 			HwHeaderInfo hw_header;
@@ -212,7 +212,7 @@ namespace PESMLIB
 										&arrIwBreps);
 			for (unsigned int iBrep = 0; iBrep < arrIwBreps.GetSize (); iBrep++)
 			{
-				Brep __gc *pBrep = new Brep (context, NULL);
+				Brep^ pBrep = new Brep (context, NULL);
 				IwBrep * pIwBrep = arrIwBreps[iBrep];
 
 				pBrep->m_pIwObj = arrIwBreps[iBrep];
@@ -235,7 +235,7 @@ namespace PESMLIB
 
 			//for (unsigned int iBrep = 0; iBrep < arrIwBreps.GetSize (); iBrep++)
 			//{
-			//	Brep __gc *pBrep = new Brep (context, NULL);
+			//	Brep^ pBrep = new Brep (context, NULL);
 			//	IwBrep * pIwBrep = arrIwBreps[iBrep];
 
 			//	pBrep->m_pIwObj = arrIwBreps[iBrep];
@@ -243,11 +243,11 @@ namespace PESMLIB
 			//}
 		};
 
-		static void Write3DM (System::String __gc *sFilename, System::Collections::ArrayList __gc *arrBreps)
+		static void Write3DM (System::String^ sFilename, System::Collections::ArrayList^ arrBreps)
 		{
 		}
 
-		static void WriteIGES (System::String __gc *sFilename, System::Collections::ArrayList __gc *arrBreps)
+		static void WriteIGES (System::String^ sFilename, System::Collections::ArrayList^ arrBreps)
 		{
 			IwStatus sStatus;
 
@@ -282,7 +282,7 @@ namespace PESMLIB
 			for (int iBrep = 0; iBrep < arrBreps->Count; iBrep++)
 			{
 				IwBoolean rbMaybeNotClosedSolid;
-				Brep __gc *pBrep = __try_cast<Brep *> (arrBreps->get_Item(iBrep));
+				Brep^ pBrep = __try_cast<Brep *> (arrBreps->get_Item(iBrep));
 				IwBrep *pIwBrep = (IwBrep *) pBrep->GetIwObj ();
 				if (pIwBrep->IsManifoldSolid ())
 					pIwBrep->OrientTrimmedSurfaces (TRUE, rbMaybeNotClosedSolid, FALSE);
@@ -296,7 +296,7 @@ namespace PESMLIB
 				0, 0, &s_vPartTrimmedSurfaces, 0);
 		};
 
-		void WriteBrepToFile(System::String __gc *filename)
+		void WriteBrepToFile(System::String^ filename)
 		{
 			if (m_pIwObj != NULL)
 			{
@@ -313,94 +313,94 @@ namespace PESMLIB
 			}
 		};
 
-		void BoundPlane (Plane __gc *plane);
-		void CreateBoundedPlane (Plane __gc * newPlane, Vector3d __gc *ptMin, Vector3d __gc *ptMax);
-		void CreatePlanarSections(Plane* vecPlanes __gc[], System::Collections::ArrayList& vecCurves, bool bConnectDisjointCurves);
-		void CreateFromNurbsSurface(NurbsSurface  __gc * srcNurbs);
-		void CreateBrepFromRegion (BrepRegionProxy __gc *regionProxy, Brep __gc *destBrep);
-		void CreateBrepFromFace (BrepFaceProxy __gc *face);
-		void CreateBrepFromRegions (System::Collections::ArrayList __gc *selectedRegions, bool bRemoveFromOriginal);
-		void CreateBrepFromRegionsSlow (System::Collections::ArrayList __gc *selectedRegions, bool bRemoveFromOriginal); // slow but sure version
-		void CreateBox (Vector3d __gc * ptMin, Vector3d __gc * ptMax);
-		void CreateBilinearPatch (Vector3d __gc * ptU0V0, Vector3d __gc * ptU1V0, Vector3d __gc * ptU0V1, Vector3d __gc * ptU1V1);
-		void CreateConePatch (Vector3d __gc * ptOrigin, Vector3d __gc * vecAxis,
+		void BoundPlane (Plane^ plane);
+		void CreateBoundedPlane (Plane^  newPlane, Vector3d^ ptMin, Vector3d^ ptMax);
+           void CreatePlanarSections(cli::array<Plane^>^ vecPlanes, System::Collections::ArrayList^ vecCurves, bool bConnectDisjointCurves);
+		void CreateFromNurbsSurface(NurbsSurface^  srcNurbs);
+		void CreateBrepFromRegion (BrepRegionProxy^ regionProxy, Brep^ destBrep);
+		void CreateBrepFromFace (BrepFaceProxy^ face);
+		void CreateBrepFromRegions (System::Collections::ArrayList^ selectedRegions, bool bRemoveFromOriginal);
+		void CreateBrepFromRegionsSlow (System::Collections::ArrayList^ selectedRegions, bool bRemoveFromOriginal); // slow but sure version
+		void CreateBox (Vector3d^  ptMin, Vector3d^  ptMax);
+		void CreateBilinearPatch (Vector3d^  ptU0V0, Vector3d^  ptU1V0, Vector3d^  ptU0V1, Vector3d^  ptU1V1);
+		void CreateConePatch (Vector3d^  ptOrigin, Vector3d^  vecAxis,
 			double dBottomRadius, double dTopRadius, double dHeight, bool bCapped);
-		void CreateSphere(Vector3d __gc * ptOrigin, Vector3d __gc * vecAxis, double dRadius);
-		void Copy (Brep __gc * srcBrep);
-		void DeleteFaces (System::Collections::ArrayList __gc *arrFaceIDs);
+		void CreateSphere(Vector3d^  ptOrigin, Vector3d^  vecAxis, double dRadius);
+		void Copy (Brep^  srcBrep);
+		void DeleteFaces (System::Collections::ArrayList^ arrFaceIDs);
 		void Dump();
-		bool Equals (System::Object __gc *obj);
-		System::Collections::ArrayList __gc * GetFacesOfSurface (System::Object __gc *surface);
-		System::Collections::ArrayList __gc * InsertInternalPlane (Plane __gc * oPlane);
-		bool JoinBreps(Brep* vecBreps __gc[]);
-		void LocalOperation (ArrayList __gc *arrFaces, ArrayList __gc *arrSurfaces);
+		bool Equals (System::Object^ obj);
+		System::Collections::ArrayList^  GetFacesOfSurface (System::Object^ surface);
+		System::Collections::ArrayList^  InsertInternalPlane (Plane^  oPlane);
+           bool JoinBreps(cli::array<Brep^>^ vecBreps);
+		void LocalOperation (ArrayList^ arrFaces, ArrayList^ arrSurfaces);
 		void MakeManifold ();
-		static bool MergeBreps(Brep *brepResult, Brep *vecBreps __gc[], BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold);
-		static bool NonManifoldMergeBreps(Brep *brepResult, Brep *vecBreps __gc[], BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold);
-		void Mirror (Brep __gc * srcBrep, Plane __gc * mirrorPlane);
-		void ReplaceSurface (BrepFaceProxy __gc *face, NurbsSurface __gc *surface, bool bCreateTrimCurves);
-		void ReplaceSurfaceOfFaces (System::Collections::ArrayList __gc *, System::Object __gc *);
+           static bool MergeBreps(Brep *brepResult, cli::array<Brep^>^ vecBreps, BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold);
+           static bool NonManifoldMergeBreps(Brep *brepResult, cli::array<Brep^>^ vecBreps, BooleanMergeType oMergeType, bool bSewFaces, bool bMakeManifold);
+		void Mirror (Brep^  srcBrep, Plane^  mirrorPlane);
+		void ReplaceSurface (BrepFaceProxy^ face, NurbsSurface^ surface, bool bCreateTrimCurves);
+		void ReplaceSurfaceOfFaces (System::Collections::ArrayList^ , System::Object^ );
 		void SewFaces ();
 		void Simplify ();
 		void Scale (double dSx, double dSy, double dSz);
 		void Translate (double dDx, double dDy, double dDz);
 		void Rotate (double dAngx, double dAngy, double dAngz);
 		void RotateAboutPoint (double dAng, double dOrigX, double dOrigY, double dOrigZ, double dAxisX, double dAxisY, double dAxisZ);
-		BrepRegionProxy __gc * GetInfiniteRegion ();
-		System::Collections::ArrayList __gc * GetRegions ();
-		BrepRegionProxy __gc * GetRegion(long iRegionId);
-		System::Collections::ArrayList __gc * GetFaces();
-		BrepFaceProxy __gc * GetFace(long iFaceId);
-		BrepFaceProxy __gc * GetFace (HC::KEY hkFace);
-		System::Collections::ArrayList __gc * GetEdges();
-		BrepEdgeProxy __gc * GetEdge(long iEdgeId);
-		BrepEdgeProxy __gc * GetEdge(HC::KEY hkEdge);
-		System::Collections::ArrayList __gc * GetRegionsFromFace (HC::KEY);
+		BrepRegionProxy^  GetInfiniteRegion ();
+		System::Collections::ArrayList^  GetRegions ();
+		BrepRegionProxy^  GetRegion(long iRegionId);
+		System::Collections::ArrayList^  GetFaces();
+		BrepFaceProxy^  GetFace(long iFaceId);
+		BrepFaceProxy^  GetFace (HC::KEY hkFace);
+		System::Collections::ArrayList^  GetEdges();
+		BrepEdgeProxy^  GetEdge(long iEdgeId);
+		BrepEdgeProxy^  GetEdge(HC::KEY hkEdge);
+		System::Collections::ArrayList^  GetRegionsFromFace (HC::KEY);
 		String* GetInfo(void);
-		XML::XmlDocumentFragment __gc * GetSurfaceShell(double dChordHeightTol, double dAngleTolInDegrees, 
+		XML::XmlDocumentFragment^  GetSurfaceShell(double dChordHeightTol, double dAngleTolInDegrees, 
 			double dMax3DEdgeLength, double dMaxAspectRatio, double dMinUVRatio);
 		void GetSurfaceShell(double dChordHeightTol, double dAngleTolInDegrees, 
-			double dMax3DEdgeLength, double dMaxAspectRatio, double dMinUVRatio, XML::XmlDocument __gc * xmlDoc, 
-			XML::XmlElement __gc * xmlShellsElem);
-		void ExportBrepToFile (String __gc *sFilename);
+			double dMax3DEdgeLength, double dMaxAspectRatio, double dMinUVRatio, XML::XmlDocument^  xmlDoc, 
+			XML::XmlElement^  xmlShellsElem);
+		void ExportBrepToFile (String^ sFilename);
 		void HighlightFeature (HC::KEY segKey, BrepFeatureType eFeature, long nID);
 		void UnHighlightFeature (HC::KEY segKey, BrepFeatureType eFeature, long nID);
 		//void RemoveFeatureGraphics (KEY segKey, BrepFeatureType, long nID);
 		//		void ComputeRegionProperties (long, double *, double *, double *, double *, double *);
-		//      void ComputePreciseRegionProperties (long, double *, double *, System::Collections::ArrayList __gc *arrMoments);
+		//      void ComputePreciseRegionProperties (long, double *, double *, System::Collections::ArrayList^ arrMoments);
 		void ShowRegionData ();
-		BrepRegionProxy __gc * RegionContainingPoint (Vector3d* pTest);
-		System::Collections::ArrayList __gc * GetObjectDependencies ();
+		BrepRegionProxy^  RegionContainingPoint (Vector3d* pTest);
+		System::Collections::ArrayList^  GetObjectDependencies ();
 		bool IsManifold();
-		void MergeEdges(BrepEdgeProxy __gc* edge1, BrepEdgeProxy __gc* edge2);
-		void RemoveEdge(BrepEdgeProxy __gc* edge);
-		void RemoveEdges(System::Collections::ArrayList __gc* delEdges);
+		void MergeEdges(BrepEdgeProxy^  edge1, BrepEdgeProxy^  edge2);
+		void RemoveEdge(BrepEdgeProxy^  edge);
+		void RemoveEdges(System::Collections::ArrayList^  delEdges);
 
 		void SuspendUpdating ();
 		void ResumeUpdating ();
 
 		// Extended implementations of IGeometry interface methods
-		void InsertGraphics (System::Collections::ArrayList __gc *hkFaces, System::Collections::ArrayList __gc *hkEdges, bool bDrawDetailed);
-		//void RemoveGraphics (HC::KEY segKey, System::Collections::ArrayList __gc *hkFaces, System::Collections::ArrayList __gc *hkEdges);
+		void InsertGraphics (System::Collections::ArrayList^ hkFaces, System::Collections::ArrayList^ hkEdges, bool bDrawDetailed);
+		//void RemoveGraphics (HC::KEY segKey, System::Collections::ArrayList^ hkFaces, System::Collections::ArrayList^ hkEdges);
 
 		// IGeometry interface
 		void InsertGraphics (bool bDrawDetailed, int handle);
 		//void RemoveGraphics (KEY segKey);
 		//void Transform (Transformation * oTransformation);
-		void ComputeBoundingBoxOld(HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax);
-		bool ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax);
+		void ComputeBoundingBoxOld(HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax);
+		bool ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax);
 		XML::XmlElement * GetXmlElement (int  iFaceOffset) { return m_pXMLElem;};
 		void Highlight (HC::KEY);
 		void UnHighlight (HC::KEY);
-		System::Object __gc * GetReferencableObject ();
+		System::Object^  GetReferencableObject ();
 		int getObjectIndex();
 
 		// IComparable interface
-		int CompareTo (System::Object __gc *);
+		int CompareTo (System::Object^ );
 
 		//Molded Form Stuff
-		//void Tesselation (HC::KEY keyGeom, bool bDrawDetailed,double dMaxAspectRatio,double dMax3DEdgeLength,XML::XmlDocument __gc * xmlDoc,XML::XmlElement __gc * pXMLRootElm);
-		void AssignPropertyAttribute (String __gc *sName);
+		//void Tesselation (HC::KEY keyGeom, bool bDrawDetailed,double dMaxAspectRatio,double dMax3DEdgeLength,XML::XmlDocument^  xmlDoc,XML::XmlElement^  pXMLRootElm);
+		void AssignPropertyAttribute (String^ sName);
 
 		// properties
 		[Browsable(false)]
@@ -435,30 +435,30 @@ namespace PESMLIB
 		}
 
 		[Browsable(false)]
-		__property void set_DimensionTolerances (VEDM::Documents::DimensionTolerances __gc * tolerances)
+		__property void set_DimensionTolerances (VEDM::Documents::DimensionTolerances^  tolerances)
 		{
 			m_tolerances = tolerances;
 		}
-		__property VEDM::Documents::DimensionTolerances __gc * get_DimensionTolerances ()
+		__property VEDM::Documents::DimensionTolerances^  get_DimensionTolerances ()
 		{
 			return this->m_tolerances;
 		}
 		[Browsable(false)]
-		__property void set_TesselationParameters (VEDM::Documents::TesselationParameters __gc * tessParam)
+		__property void set_TesselationParameters (VEDM::Documents::TesselationParameters^  tessParam)
 		{
 			m_tessParam = tessParam;
 		}
-		__property VEDM::Documents::TesselationParameters __gc * get_TesselationParameters ()
+		__property VEDM::Documents::TesselationParameters^  get_TesselationParameters ()
 		{
 			return this->m_tessParam;
 		}
 		[Browsable(false)]
-		__property System::Collections::ArrayList __gc * get_FaceKeys()
+		__property System::Collections::ArrayList^  get_FaceKeys()
 		{
 			return this->m_hkFaces;
 		}
 		[Browsable(false)]
-		__property System::Collections::ArrayList __gc * get_EdgeKeys()
+		__property System::Collections::ArrayList^  get_EdgeKeys()
 		{
 			return this->m_hkEdges;
 		}
@@ -538,19 +538,19 @@ namespace PESMLIB
 		long m_lEdgeCounter;
 		bool m_bCountersDirty;
 		bool m_bSuspendUpdating;
-		VEDM::Documents::DimensionTolerances __gc * m_tolerances;
-		VEDM::Documents::TesselationParameters __gc * m_tessParam;
-		Utilities::StringObjDictionary __gc *m_dependencies;
-		System::Collections::ArrayList __gc *m_hkFaces;
-		System::Collections::ArrayList __gc *m_hkEdges;
+		VEDM::Documents::DimensionTolerances^  m_tolerances;
+		VEDM::Documents::TesselationParameters^  m_tessParam;
+		Utilities::StringObjDictionary^ m_dependencies;
+		System::Collections::ArrayList^ m_hkFaces;
+		System::Collections::ArrayList^ m_hkEdges;
 		IwRegion *GetIwRegionFromID (long nID);
 	public private:
-		IwFace * GetIwFaceFromProxy (BrepFaceProxy __gc *);
-		IwEdge * GetIwEdgeFromProxy (BrepEdgeProxy __gc *);
-		void AddDependency (IPersistentObject __gc *pObj);
-		void RemoveDependency (IPersistentObject __gc *pObj);
-		System::Object __gc * GetDependency (System::String __gc *sObjId);
-		void AttachIwObj (Context __gc *pContext, IwObject *pIwObj);
+		IwFace * GetIwFaceFromProxy (BrepFaceProxy^ );
+		IwEdge * GetIwEdgeFromProxy (BrepEdgeProxy^ );
+		void AddDependency (IPersistentObject^ pObj);
+		void RemoveDependency (IPersistentObject^ pObj);
+		System::Object^  GetDependency (System::String^ sObjId);
+		void AttachIwObj (Context^ pContext, IwObject *pIwObj);
 		virtual void AddToDOM ();
 		virtual void GetFromDOM ();
 
