@@ -3,11 +3,11 @@ using namespace VEDM::Windows;
 
 namespace PESMLIB
 {
-   __gc public class BrepRegionDecoder : public SelectionDecoder
+   public ref class BrepRegionDecoder : public SelectionDecoder
    {
    public:
       BrepRegionDecoder(void);
       ~BrepRegionDecoder(void);
-      System::Object __gc * Decode (Selection __gc *, int index);
+      System::Object^  Decode (Selection^ , int index);
    };
 }

@@ -14,7 +14,7 @@ using namespace SHELL;
 
 namespace PESMLIB
 {
-	__value public enum AttributeID 
+       public enum class AttributeID
 	{
 		AttributeID_IDSELF = 10001,
 		AttributeID_HKEY = 10002,
@@ -29,7 +29,7 @@ namespace PESMLIB
 		AttributeID_PLATEMASK = 10010
 	};
 
-	__value public enum AttributeBehavior
+       public enum class AttributeBehavior
 	{
 		AttributeBehavior_ABCopy = IW_AB_COPY,
 		AttributeBehavior_ABReference = IW_AB_REFERENCE,
@@ -37,7 +37,7 @@ namespace PESMLIB
 		AttributeBehavior_ABStandaloneReference = IW_AB_STANDALONE_REFERENCE
 	};
 
-	__gc public class Context  
+	public ref class Context  
 	{
 	public:
 		Context();
@@ -51,51 +51,51 @@ namespace PESMLIB
 		IwContext *m_pIwContext;
 	};
 
-	__gc __abstract public class PersistObject : public IPersistentObject
+	public ref class abstract PersistObject : public IPersistentObject
 	{
 	public:
 		PersistObject(void);
 		virtual ~PersistObject(void) { }
-		virtual String __gc * CreateId();
-		virtual void SetId(String __gc * sId);
-		virtual String __gc * GetId();
+		virtual String^  CreateId();
+		virtual void SetId(String^  sId);
+		virtual String^  GetId();
 		virtual bool HasId() { return (NULL != m_sId); }
 		virtual void IncrementRefCount();
 		virtual void DecrementRefCount();
 		[BrowsableAttribute(false)]
-		__property virtual System::Xml::XmlElement __gc *get_XmlElement (void);
+		__property virtual System::Xml::XmlElement^ get_XmlElement (void);
 		[BrowsableAttribute(false)]
-		__property virtual void set_XmlElement (System::Xml::XmlElement __gc *pElem);
+		__property virtual void set_XmlElement (System::Xml::XmlElement^ pElem);
 		[BrowsableAttribute(false)]
-		__property virtual System::String __gc *get_IdSelf (void);
+		__property virtual System::String^ get_IdSelf (void);
 
 		//private:
-		String __gc * m_sId;
+		String^  m_sId;
 		//protected private:
-		XML::XmlElement __gc * m_pXMLElem;
+		XML::XmlElement^  m_pXMLElem;
 	};
 
-	__gc __abstract public class SMObject : public PersistObject
+	public ref class abstract SMObject : public PersistObject
 	{
 	public:
 		SMObject(void);
 		virtual ~SMObject(void);
-		Context __gc * GetContext () {return m_pContext;};
-		virtual String __gc * GetIwObjAttribute();
+		Context^  GetContext () {return m_pContext;};
+		virtual String^  GetIwObjAttribute();
 
 	public private:
 		virtual IwObject * ExtractIwObj ();
 		virtual const IwObject * GetIwObj ();
-		virtual void AttachIwObj (Context __gc *pContext, IwObject *pIwObj) = 0;
+		virtual void AttachIwObj (Context^ pContext, IwObject *pIwObj) = 0;
 
 	protected private:
-		Context __gc *m_pContext;
+		Context^ m_pContext;
 		IwObject *m_pIwObj;
 
 		virtual void AddToDOM () = 0;
 		virtual void GetFromDOM () = 0;
 		virtual void SetIwObjAttribute ();
-		static IwAttribute * CreateStringAttribute(IwContext& context, AttributeID idType, String __gc *pValue);
+		static IwAttribute * CreateStringAttribute(IwContext& context, AttributeID idType, String^ pValue);
 
 		virtual IwContext& GetIwContext() { return m_pContext->GetIwContext(); }
 		virtual IwContext* GetIwContextPtr() { return m_pContext->GetIwContextPtr(); }

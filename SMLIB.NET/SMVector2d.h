@@ -8,7 +8,7 @@ using namespace VEDM::Windows;
 
 namespace PESMLIB
 {
-	__gc public class Vector2d: public PersistObject
+	public ref class Vector2d: public PersistObject
 	{
 	public:
 		Vector2d(void);
@@ -19,9 +19,9 @@ namespace PESMLIB
 		virtual ~Vector2d(void);
 
 		// Managed operators
-		static Vector2d __gc * op_Addition(Vector2d *vec1, Vector2d *vec2);
-		static Vector2d __gc * op_Subtraction(Vector2d *vec1, Vector2d *vec2);
-		static Vector2d __gc * op_Assign(Vector2d *vec1, Vector2d *pt2);
+		static Vector2d^  op_Addition(Vector2d *vec1, Vector2d *vec2);
+		static Vector2d^  op_Subtraction(Vector2d *vec1, Vector2d *vec2);
+		static Vector2d^  op_Assign(Vector2d *vec1, Vector2d *pt2);
 
 		virtual HC::NL_POINT GetHoopsPoint();
 		virtual void SetCanonical (double x, double y);
@@ -32,8 +32,8 @@ namespace PESMLIB
 		virtual void Unitize();
 		virtual void Scale(double dScale);
 
-		static Vector2d __gc * Parse (System::String __gc *sVector);
-		System::String __gc * ToString ();
+		static Vector2d^  Parse (System::String^ sVector);
+		System::String^  ToString ();
 
 		// Public properties
 		__property virtual double get_X () { return m_pIwVector2d->x; };
@@ -60,13 +60,13 @@ namespace PESMLIB
 		XML::XmlElement* m_pXMLElem;
 	};
 
-	__gc public class Vector2dConverter: public Utilities::PropertiesDeluxeTypeConverter
+	public ref class Vector2dConverter: public Utilities::PropertiesDeluxeTypeConverter
 	{
 	public:
 		bool CanConvertFrom(ITypeDescriptorContext *context, Type *sourceType);
-		System::Object __gc * ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
+		System::Object^  ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
 		bool CanConvertTo(ITypeDescriptorContext *context, Type *destinationType);
-		System::Object __gc * ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
+		System::Object^  ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
 		bool GetPropertiesSupported(ITypeDescriptorContext *context);
 		PropertyDescriptorCollection* GetProperties(ITypeDescriptorContext* context, Object* value, Attribute* attributes[]);
 	};

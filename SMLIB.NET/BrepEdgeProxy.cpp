@@ -12,7 +12,7 @@ namespace PESMLIB
 		m_pContext = 0;
 	}
 
-	BrepEdgeProxy::BrepEdgeProxy (PESMLIB::Context __gc *pContext, PESMLIB::Brep __gc *pBrep, long lEdgeID)
+	BrepEdgeProxy::BrepEdgeProxy (PESMLIB::Context^ pContext, PESMLIB::Brep^ pBrep, long lEdgeID)
 	{
 		m_pContext = pContext;
 		m_pBrep = pBrep;
@@ -55,7 +55,7 @@ namespace PESMLIB
 				}
 			}
 		}
-		catch (System::Exception __gc *e)
+		catch (System::Exception^ e)
 		{
 			Console::WriteLine (e->Message);
 		}
@@ -155,9 +155,9 @@ namespace PESMLIB
 		return false;
 	}
 
-	System::Collections::ArrayList __gc * BrepEdgeProxy::GetFaces()
+	System::Collections::ArrayList^  BrepEdgeProxy::GetFaces()
 	{
-		System::Collections::ArrayList __gc * listFaceProxies = new System::Collections::ArrayList();
+		System::Collections::ArrayList^  listFaceProxies = new System::Collections::ArrayList();
 		IwEdge * pIwEdge = NULL;
 		IwBrep * pIwBrep = (IwBrep *) (this->get_Brep()->GetIwObj());
 		IwTArray<IwEdge *> arrEdges;
@@ -208,7 +208,7 @@ namespace PESMLIB
 	//{
 	//}
 
-	bool BrepEdgeProxy::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	bool BrepEdgeProxy::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
 	{
 		return false;
 	}
@@ -225,12 +225,12 @@ namespace PESMLIB
 			m_pBrep->UnHighlightFeature (keySeg, Brep::BrepFeatureType::Brep_Edge, m_lEdgeID);
 	}
 
-	System::Object __gc * BrepEdgeProxy::GetReferencableObject ()
+	System::Object^  BrepEdgeProxy::GetReferencableObject ()
 	{
 		return m_pBrep;
 	}
 
-	int BrepEdgeProxy::CompareTo(System::Object __gc *obj)
+	int BrepEdgeProxy::CompareTo(System::Object^ obj)
 	{
 		try
 		{
@@ -274,7 +274,7 @@ namespace PESMLIB
 		return 1;
 	}
 
-	bool BrepEdgeProxy::Equals (System::Object __gc * obj)
+	bool BrepEdgeProxy::Equals (System::Object^  obj)
 	{
 		try
 		{
@@ -292,7 +292,7 @@ namespace PESMLIB
 		return false;
 	}
 
-	System::Object __gc * BrepEdgeProxy::FindAttribute (AttributeID ulAttributeID)
+	System::Object^  BrepEdgeProxy::FindAttribute (AttributeID ulAttributeID)
 	{
 		try
 		{
@@ -308,7 +308,7 @@ namespace PESMLIB
 					{
 						if (pAttribute->GetNumLongElements () > 0)
 						{
-							System::Int32 __gc *newLong = new System::Int32();
+							System::Int32^ newLong = new System::Int32();
 							const long *plElements = pAttribute->GetLongElementsAddress ();
 							*newLong = plElements[0];
 							return __box(*newLong);
@@ -316,13 +316,13 @@ namespace PESMLIB
 						else if (pAttribute->GetNumCharacterElements () > 0)
 						{
 							const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-							System::String __gc *newString = new System::String (pcElements);
+							System::String^ newString = new System::String (pcElements);
 							return newString;
 						}
 						else if (pAttribute->GetNumDoubleElements () > 0)
 						{
 							const double *pdElements = pAttribute->GetDoubleElementsAddress ();
-							System::Double __gc *newDouble = new System::Double ();
+							System::Double^ newDouble = new System::Double ();
 							*newDouble = pdElements[0];
 							return __box (*newDouble);
 						}
@@ -376,7 +376,7 @@ namespace PESMLIB
 
 		return pIwEdge;
 	}
-	bool BrepEdgeProxy::IsDependentOn (IPersistentObject __gc *pObj)
+	bool BrepEdgeProxy::IsDependentOn (IPersistentObject^ pObj)
 	{
 		try
 		{
@@ -393,7 +393,7 @@ namespace PESMLIB
 						if (pAttribute->GetNumCharacterElements () > 0)
 						{
 							const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-							System::String __gc *newString = new System::String (pcElements);
+							System::String^ newString = new System::String (pcElements);
 							if (newString->IndexOf (pObj->IdSelf) >= 0)
 								return true;
 						}
@@ -409,11 +409,11 @@ namespace PESMLIB
 		return false;
 	}
 
-	System::Collections::ArrayList __gc * BrepEdgeProxy::GetObjectDependencies ()
+	System::Collections::ArrayList^  BrepEdgeProxy::GetObjectDependencies ()
 	{
 		try
 		{
-			System::Collections::ArrayList __gc *arrDependents = new System::Collections::ArrayList ();
+			System::Collections::ArrayList^ arrDependents = new System::Collections::ArrayList ();
 
 			// First retrieve the Brep region from the owning brep.
 
@@ -428,7 +428,7 @@ namespace PESMLIB
 						if (pAttribute->GetNumCharacterElements () > 0)
 						{
 							const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-							System::String __gc *sAttribute = new System::String (pcElements);
+							System::String^ sAttribute = new System::String (pcElements);
 
 							// Parse the string of ObjIDs and obtain the objects from the brep
 
@@ -439,7 +439,7 @@ namespace PESMLIB
 							for (int iTok = 0; iTok < sTokens->Count; iTok++)
 							{
 								// Don't allow null objects to be added.
-								System::Object __gc *dependentObj = m_pBrep->GetDependency (sTokens[iTok]);
+								System::Object^ dependentObj = m_pBrep->GetDependency (sTokens[iTok]);
 								if (NULL != dependentObj)
 									arrDependents->Add (dependentObj);
 							}
@@ -458,12 +458,12 @@ namespace PESMLIB
 		return NULL;
 	}
 
-	void BrepEdgeProxy::RemoveObjectDependency (IPersistentObject __gc *pIPersistentObject)
+	void BrepEdgeProxy::RemoveObjectDependency (IPersistentObject^ pIPersistentObject)
 	{
 		// TO DO: implement this method
 	}
 
-	void BrepEdgeProxy::AddObjectDependency (IPersistentObject __gc *pIPersistentObject)
+	void BrepEdgeProxy::AddObjectDependency (IPersistentObject^ pIPersistentObject)
 	{
 		try
 		{
@@ -474,7 +474,7 @@ namespace PESMLIB
 				IwEdge *pIwEdge = GetIwEdge ();
 				if (NULL != pIwEdge)
 				{
-					System::String __gc *sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
+					System::String^ sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
 
 					IwAttribute *pExistingAttribute = pIwEdge->FindAttribute (AttributeID_IDOBJ);
 					if (NULL != pExistingAttribute)
@@ -482,7 +482,7 @@ namespace PESMLIB
 						// If existing attribute found, get the string and look for this ID. 
 						// Don't add the ID again if it already exists.
 
-						System::String __gc *sAttribute = new System::String (
+						System::String^ sAttribute = new System::String (
 							pExistingAttribute->GetCharacterElementsAddress ());
 						int iObj = sAttribute->IndexOf (pIPersistentObject->IdSelf);
 						if (iObj < 0) // object not found so add it

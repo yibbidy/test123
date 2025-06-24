@@ -51,7 +51,7 @@ namespace PESMLIB
 		//}
 	}
 
-	int NurbsCurve::CompareTo (System::Object __gc *obj)
+	int NurbsCurve::CompareTo (System::Object^ obj)
 	{
 		try
 		{
@@ -86,7 +86,7 @@ namespace PESMLIB
 		return 1;
 	}
 
-	bool NurbsCurve::Equals (System::Object __gc * obj)
+	bool NurbsCurve::Equals (System::Object^  obj)
 	{
 		try
 		{
@@ -135,9 +135,9 @@ namespace PESMLIB
 		}
 	}
 
-   void NurbsCurve::Tessellate(Extent1d __gc *extInterval, double dChordHeightTolerance, 
+   void NurbsCurve::Tessellate(Extent1d^ extInterval, double dChordHeightTolerance, 
       double dAngleToleranceDeg, ULONG lMinimumNumberOfSegments, 
-      System::Collections::ArrayList __gc *parameters, System::Collections::ArrayList __gc * points)
+      System::Collections::ArrayList^ parameters, System::Collections::ArrayList^  points)
    {
       try
       {
@@ -186,14 +186,14 @@ namespace PESMLIB
 	   return;
    }
 
-   Extent1d __gc * NurbsCurve::GetNaturalInterval ()
+   Extent1d^  NurbsCurve::GetNaturalInterval ()
    {
       try
       {
          if (m_pIwObj != NULL)
          {
             IwExtent1d iwExtent = ((IwBSplineCurve *) m_pIwObj)->GetNaturalInterval ();
-            Extent1d __gc *extent = new Extent1d (iwExtent.GetMin (), iwExtent.GetMax ());
+            Extent1d^ extent = new Extent1d (iwExtent.GetMin (), iwExtent.GetMax ());
             return extent;
          }
       }
@@ -231,8 +231,8 @@ namespace PESMLIB
 				}
 
 				//HC::POINT fCntrlPts __gc[] = 0;
-				float fWeights __gc[] = 0;
-				float fKnots __gc[] = 0;
+                               cli::array<float>^ fWeights = nullptr;
+                               cli::array<float>^ fKnots = nullptr;
 				int iNumPts = arrCtrlPts.GetSize ();
 				//if (iNumPts > 0)
 				//{

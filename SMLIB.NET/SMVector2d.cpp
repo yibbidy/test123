@@ -145,24 +145,24 @@ namespace PESMLIB
 		m_pIwVector2d->Unitize();
 	}
 
-	Vector2d __gc * Vector2d::op_Addition(Vector2d *lh, Vector2d *rh)
+	Vector2d^  Vector2d::op_Addition(Vector2d *lh, Vector2d *rh)
 	{
 		return new Vector2d(lh->X + rh->X, lh->Y + rh->Y);
 	}
 
-	Vector2d __gc * Vector2d::op_Subtraction(Vector2d *lh, Vector2d *rh)
+	Vector2d^  Vector2d::op_Subtraction(Vector2d *lh, Vector2d *rh)
 	{
 		return new Vector2d (lh->X - rh->X, lh->Y -rh->Y);
 	}
 
-	Vector2d __gc * Vector2d::op_Assign(Vector2d *lh, Vector2d *rh)
+	Vector2d^  Vector2d::op_Assign(Vector2d *lh, Vector2d *rh)
 	{
 		lh->X = rh->X;
 		lh->Y = rh->Y;
 		return lh;
 	}
 
-   String __gc * Vector2d::ToString ()
+   String^  Vector2d::ToString ()
    {
       try
       {
@@ -175,14 +175,14 @@ namespace PESMLIB
       }
    }
 
-   Vector2d __gc * Vector2d::Parse (String __gc *sVector)
+   Vector2d^  Vector2d::Parse (String^ sVector)
    {
       try
       {
          if (NULL != sVector)
          {
             System::Char cTok[] = {','};
-            System::String __gc *sSplit[] = sVector->Split (cTok);
+            System::String^ sSplit[] = sVector->Split (cTok);
             return new Vector2d (
                System::Convert::ToDouble (sSplit[0]), 
                System::Convert::ToDouble (sSplit[1]));
@@ -217,7 +217,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertFrom (context, sourceType);
    }
 
-   Object __gc * Vector2dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
+   Object^  Vector2dConverter::ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, Object *value)
    {
 	   Utilities::UnitsAttribute* unitsAttrib = NULL;
 	   Utilities::UnitScaleManager* scaleMgr = Utilities::UnitScaleManager::Current;
@@ -240,7 +240,7 @@ namespace PESMLIB
 				   break;
 			   }
 		   }
-		   String __gc* sValue = dynamic_cast< String *>(value);
+		   String^  sValue = dynamic_cast< String *>(value);
 		   // If we have a UnitsAttribute, parse out value and abbreviation
 		   if (unitsAttrib != NULL)
 		   {
@@ -252,7 +252,7 @@ namespace PESMLIB
 		   else
 			   sValues = sValue;
 		   // Parse the vector values
-		   String __gc* v[]  = sValues->Split(cTok);
+		   String^  v[]  = sValues->Split(cTok);
 		   if (v->Length != 2)
 			   throw new ArgumentException(
 			   "Vector2d string must be in the form <x>,<y>");
@@ -298,7 +298,7 @@ namespace PESMLIB
 	   return PropertiesDeluxeTypeConverter::CanConvertTo (context, destinationType);
    }
 
-   System::Object __gc * Vector2dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
+   System::Object^  Vector2dConverter::ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType)
    {
 	   String* sFormat = String::Empty;
 	   String* sFormatSpec = String::Empty;
@@ -359,7 +359,7 @@ namespace PESMLIB
 		   Vector2d* point = static_cast<Vector2d*>(value);
 
 		   // Specify that we should use the two-parameter constructor.
-		   Type __gc * types[] = {__typeof(double), __typeof(double)};
+		   Type^  types[] = {__typeof(double), __typeof(double)};
 		   ArrayList *coords  = new ArrayList();
 		   coords->Add(__box(point->X));
 		   coords->Add(__box(point->Y));

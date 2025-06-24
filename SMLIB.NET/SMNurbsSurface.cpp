@@ -35,7 +35,7 @@ namespace PESMLIB
 		}
 	}
 
-	int NurbsSurface::CompareTo (System::Object __gc *obj)
+	int NurbsSurface::CompareTo (System::Object^ obj)
 	{
 		try
 		{
@@ -70,7 +70,7 @@ namespace PESMLIB
 		return 1;
 	}
 
-	bool NurbsSurface::Equals (System::Object __gc * obj)
+	bool NurbsSurface::Equals (System::Object^  obj)
 	{
 		try
 		{
@@ -119,7 +119,7 @@ namespace PESMLIB
 		}
 	}
 
-	void NurbsSurface::Copy (NurbsSurface __gc * srcNurbs)
+	void NurbsSurface::Copy (NurbsSurface^  srcNurbs)
    {
       try
       {
@@ -184,7 +184,7 @@ namespace PESMLIB
 		}
    }
 
- //  void NurbsSurface::Transform (PEHoops::MVO::Transformation __gc * oTransformation)
+ //  void NurbsSurface::Transform (PEHoops::MVO::Transformation^  oTransformation)
 	//{
  //     try
  //     {
@@ -200,13 +200,13 @@ namespace PESMLIB
  //           pSurface->Transform (crRotateNMove);
  //        }
  //     }
- //     catch (System::Exception __gc *ex)
+ //     catch (System::Exception^ ex)
  //     {
  //        System::Console::WriteLine (ex->Message);
  //     }
 	//}
 
-	bool NurbsSurface::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	bool NurbsSurface::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
 	{
       // TODO
 		bool bRet = false;

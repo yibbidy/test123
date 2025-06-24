@@ -6,7 +6,7 @@ using namespace Utilities;
 
 namespace PESMLIB
 {
-	__gc public class Extent1d: public PersistObject
+	public ref class Extent1d: public PersistObject
 	{
 	public:
 		Extent1d(void);
@@ -19,8 +19,8 @@ namespace PESMLIB
       void Init ();
       void Union (Extent1d& extOther, Extent1d& extResult);
 
-		static Extent1d __gc * Parse (System::String __gc *sExtent);
-		System::String __gc * ToString ();
+		static Extent1d^  Parse (System::String^ sExtent);
+		System::String^  ToString ();
 
 		// Public properties
       __property virtual double get_Min ();
@@ -31,7 +31,7 @@ namespace PESMLIB
 		[NotifyParentPropertyAttribute(true), RefreshPropertiesAttribute(RefreshProperties::Repaint),
 			Description("Maximum value"), FormatStringAttribute("#0.000")]
 		__property virtual void set_Max (double dMax);
-//		__event System::EventHandler __gc *Changed;
+//		__event System::EventHandler^ Changed;
 	public protected:
 		virtual IwExtent1d * ExtractObj ();
 		virtual const IwExtent1d *GetIwObj ();
@@ -44,13 +44,13 @@ namespace PESMLIB
 		IwExtent1d *m_pIwExtent1d;
 	};
 
-	__gc public class Extent1dConverter: public Utilities::PropertiesDeluxeTypeConverter
+	public ref class Extent1dConverter: public Utilities::PropertiesDeluxeTypeConverter
 	{
 	public:
 		bool CanConvertFrom(ITypeDescriptorContext *context, Type *sourceType);
-		System::Object __gc * ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
+		System::Object^  ConvertFrom(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value);
 		bool CanConvertTo(ITypeDescriptorContext *context, Type *destinationType);
-		System::Object __gc * ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
+		System::Object^  ConvertTo(ITypeDescriptorContext *context, System::Globalization::CultureInfo *culture, System::Object *value, Type *destinationType);
 		bool GetPropertiesSupported(ITypeDescriptorContext *context);
 	};
 }

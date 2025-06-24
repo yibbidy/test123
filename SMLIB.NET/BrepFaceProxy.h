@@ -19,14 +19,14 @@ namespace XML = System::Xml;
 namespace PESMLIB
 {
 	[TypeConverterAttribute(__typeof(PropertiesDeluxeTypeConverter))]
-	__gc public class BrepFaceProxy : public VEDM::Windows::IGeometry, public IComparable
+	public ref class BrepFaceProxy : public VEDM::Windows::IGeometry, public IComparable
 	{
 	public:
 		BrepFaceProxy(void);
-		BrepFaceProxy (PESMLIB::Context __gc *pContext, PESMLIB::Brep __gc *pBrep, long lFaceID);
+		BrepFaceProxy (PESMLIB::Context^ pContext, PESMLIB::Brep^ pBrep, long lFaceID);
 		virtual ~BrepFaceProxy(void);
 
-		bool Equals (System::Object __gc * obj);
+		bool Equals (System::Object^  obj);
 
 	public:
 		double GetArea();
@@ -37,58 +37,58 @@ namespace PESMLIB
 		double getVertexMin();
 		double getVertexMax();
 		Vector3d * GetMyCentroid();
-		System::Collections::ArrayList __gc * GetEdges();
+		System::Collections::ArrayList^  GetEdges();
 		// IGeometry implementation
 		void InsertGraphics (bool bDrawDetailed, int handle);
 		//void RemoveGraphics (HC::KEY keyGeom);
 		//void Transform (Transformation * oTransformation);
-		bool ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax);
-		XML::XmlElement __gc * GetXmlElement (int  iFaceOffset) { return NULL;};
+		bool ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax);
+		XML::XmlElement^  GetXmlElement (int  iFaceOffset) { return NULL;};
 		void Highlight (HC::KEY);
 		void UnHighlight (HC::KEY);
-		System::Object __gc * GetReferencableObject ();
-		void AddObjectDependency (IPersistentObject __gc *pIPersistentObject);
-		System::Collections::ArrayList __gc * GetObjectDependencies ();
-		bool IsDependentOn (IPersistentObject __gc *pObj);
-		void RemoveObjectDependency (IPersistentObject __gc *pIPersistentObject);
-		void SetAttribute (AttributeID, System::Object __gc *, AttributeBehavior);
-		System::Object __gc * FindAttribute (AttributeID);
+		System::Object^  GetReferencableObject ();
+		void AddObjectDependency (IPersistentObject^ pIPersistentObject);
+		System::Collections::ArrayList^  GetObjectDependencies ();
+		bool IsDependentOn (IPersistentObject^ pObj);
+		void RemoveObjectDependency (IPersistentObject^ pIPersistentObject);
+		void SetAttribute (AttributeID, System::Object^ , AttributeBehavior);
+		System::Object^  FindAttribute (AttributeID);
 		void RemoveAttribute (AttributeID);
-		System::Collections::ArrayList __gc * GetRegions ();
-		//      System::Object __gc * GetSurface ();
-		bool HasSameSurface (BrepFaceProxy __gc *srcFace);
-		System::Object __gc * GetSurfaceCopy ();
-		void ComputeProperties (double __gc& dArea, double __gc& dVolume, System::Collections::ArrayList __gc *arrMoments);
-		void ComputeMyProperties (double __gc& dArea, double __gc& dVolume, System::Collections::ArrayList __gc *arrMoments);
-		Vector3d __gc * DropPoint(Vector3d __gc * ptToDrop, Vector3d __gc *vecNormal);
-		Vector3d __gc * DropPointAlongLine(Vector3d __gc *ptToDrop, Vector3d __gc *vecDropDirection, Vector3d __gc *vecNormal);
+		System::Collections::ArrayList^  GetRegions ();
+		//      System::Object^  GetSurface ();
+		bool HasSameSurface (BrepFaceProxy^ srcFace);
+		System::Object^  GetSurfaceCopy ();
+		void ComputeProperties (double% dArea, double% dVolume, System::Collections::ArrayList^ arrMoments);
+		void ComputeMyProperties (double% dArea, double% dVolume, System::Collections::ArrayList^ arrMoments);
+		Vector3d^  DropPoint(Vector3d^  ptToDrop, Vector3d^ vecNormal);
+		Vector3d^  DropPointAlongLine(Vector3d^ ptToDrop, Vector3d^ vecDropDirection, Vector3d^ vecNormal);
 
 		//Molded Forms
-		void AssignPropertyAttribute (String __gc *sName);
+		void AssignPropertyAttribute (String^ sName);
 
 		// IComparable interface
-		int CompareTo(System::Object __gc *obj);
+		int CompareTo(System::Object^ obj);
 
 		[Category("Identity"), Description("Face identifier"), PropertyOrder(0),
 			DisplayName("Face ID"), ReadOnly(true)]
-		__property long get_FaceID () { return m_lFaceID; };
+		property long FaceID { long get() { return m_lFaceID; }
 	//	[ReadOnly(true)]
-		__property void set_FaceID (long value) { m_lFaceID = value; };
+		 void set(long value) { m_lFaceID = value; } }
 		[Browsable(false)]
-		__property PESMLIB::Brep __gc * get_Brep () { return m_pBrep; };
-		__property void set_Brep (PESMLIB::Brep __gc *pBrep) { m_pBrep = pBrep; };
+		property PESMLIB::Brep^ Brep { PESMLIB::Brep^ get() { return m_pBrep; }
+		 void set(PESMLIB::Brep^ pBrep) { m_pBrep = pBrep; } }
 		[Category("Properties"), Description("Area of face, m^2"), PropertyOrder(1),
 			TypeConverter(__typeof(UnitsTypeConverter)), UnitsAttribute(Units::UnitBasis::Category::AREA)]
-		__property double get_Area() { return GetArea(); };
+		property double Area { double get() { return GetArea(); } }
 		[Category("Properties"), Description("Centroid of face, {m,m,m}"), PropertyOrder(2),
 			TypeConverter(__typeof(Vector3dConverter)),UnitsAttribute(Units::UnitBasis::Category::LENGTH)]
-		__property PESMLIB::Vector3d __gc * get_Centroid() { return GetCentroid(); };
+		property PESMLIB::Vector3d^ Centroid { PESMLIB::Vector3d^ get() { return GetCentroid(); } }
 		[Category("Properties"), Description("Delta Volume of face, m^3"), PropertyOrder(3),
 			TypeConverter(__typeof(NumericFormatConverter)),FormatString("#0.000")]
 		[Browsable(false)]
-		__property double get_Volume() { return GetVolume();};
+		property double Volume { double get() { return GetVolume(); } }
 		[Browsable(false)]
-		__property System::String* get_PropertyName ()
+		System::String^ get_PropertyName()
 		{
 			try
 			{
@@ -111,7 +111,7 @@ namespace PESMLIB
 	private:
 		long m_lFaceID;
 		double m_dArea;
-		PESMLIB::Brep __gc *m_pBrep;
-		PESMLIB::Context __gc *m_pContext;
+		PESMLIB::Brep^ m_pBrep;
+		PESMLIB::Context^ m_pContext;
 	};
 }

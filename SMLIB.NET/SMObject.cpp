@@ -22,7 +22,7 @@ namespace PESMLIB
 		m_sId = NULL;
 		m_pXMLElem = NULL;
 	}
-	String __gc * PersistObject::GetId()
+	String^  PersistObject::GetId()
 	{
 		return m_sId;
 	}
@@ -30,7 +30,7 @@ namespace PESMLIB
 	{
 		m_sId = sId;
 	}
-	String __gc * PersistObject::CreateId()
+	String^  PersistObject::CreateId()
 	{
 
 		// If m_sId is not empty, then create one. Otherwise, return
@@ -47,7 +47,7 @@ namespace PESMLIB
 	{
 
 		int iRefCnt = 0;
-		System::String __gc * sRefCnt;
+		System::String^  sRefCnt;
 		sRefCnt = m_pXMLElem->GetAttribute("iRefCnt");
 		if (sRefCnt->Length > 0)
 			iRefCnt = Convert::ToInt32(sRefCnt);
@@ -59,7 +59,7 @@ namespace PESMLIB
 	{
 
 		int iRefCnt = 0;
-		System::String __gc * sRefCnt;
+		System::String^  sRefCnt;
 		sRefCnt = m_pXMLElem->GetAttribute("iRefCnt");
 		if (sRefCnt->Length > 0)
 			iRefCnt = Convert::ToInt32(sRefCnt);
@@ -107,7 +107,7 @@ namespace PESMLIB
 			// If created set an attribute on this surface which is the GUID of the
 			// persistent instance.
 
-			String __gc *sId = GetId ();
+			String^ sId = GetId ();
 
 			if (m_pIwObj != NULL && sId != NULL)
 			{
@@ -137,9 +137,9 @@ namespace PESMLIB
 		}
 	}
 
-	String __gc * SMObject::GetIwObjAttribute()
+	String^  SMObject::GetIwObjAttribute()
 	{
-		String __gc *sId = String::Empty;
+		String^ sId = String::Empty;
 		IwAttribute *pAttribute = ((IwAObject *)m_pIwObj)->FindAttribute(AttributeID_IDSELF);
 		if (pAttribute != NULL)
 				sId = new String(pAttribute->GetCharacterElementsAddress());
@@ -160,23 +160,23 @@ namespace PESMLIB
 		return m_pIwObj;
 	}
 
-   System::Xml::XmlElement __gc *PESMLIB::PersistObject::get_XmlElement (void)
+   System::Xml::XmlElement^ PESMLIB::PersistObject::get_XmlElement (void)
    {
       return m_pXMLElem;
    }
 
-   void PESMLIB::PersistObject::set_XmlElement (System::Xml::XmlElement __gc *pElem)
+   void PESMLIB::PersistObject::set_XmlElement (System::Xml::XmlElement^ pElem)
    {
       m_pXMLElem = pElem;
       //TODO: update graphics or whatever else is needed
    }
 
-   System::String __gc *PESMLIB::PersistObject::get_IdSelf (void)
+   System::String^ PESMLIB::PersistObject::get_IdSelf (void)
    {
       return GetId ();
    }
 
-   IwAttribute * SMObject::CreateStringAttribute(IwContext &context, PESMLIB::AttributeID idType, System::String __gc *pValue)
+   IwAttribute * SMObject::CreateStringAttribute(IwContext &context, PESMLIB::AttributeID idType, System::String^ pValue)
    {
 	   IwTArray<long> arrLongEl;
 	   IwTArray<double> arrDoubleEl;

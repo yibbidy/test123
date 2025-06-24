@@ -14,7 +14,7 @@ namespace PESMLIB
       m_dArea = System::Double::MinValue;
    }
 
-   BrepFaceProxy::BrepFaceProxy (PESMLIB::Context __gc *pContext, PESMLIB::Brep __gc *pBrep, long lFaceID)
+   BrepFaceProxy::BrepFaceProxy (PESMLIB::Context^ pContext, PESMLIB::Brep^ pBrep, long lFaceID)
    {
       m_pContext = pContext;
       m_pBrep = pBrep;
@@ -26,8 +26,8 @@ namespace PESMLIB
    {
    }
 	
-   void BrepFaceProxy::ComputeProperties (double __gc& dArea, double __gc& dVolume,
-      System::Collections::ArrayList __gc *arrMoments)
+   void BrepFaceProxy::ComputeProperties (double% dArea, double% dVolume,
+      System::Collections::ArrayList^ arrMoments)
    {
       try
       {
@@ -88,7 +88,7 @@ namespace PESMLIB
             }
          } // if (pIwFace)
 		}
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->Message);
       }
@@ -101,7 +101,7 @@ namespace PESMLIB
       {
 		   if (m_dArea == System::Double::MinValue)
 		   {
-				ArrayList __gc *arrMoments = new ArrayList ();
+				ArrayList^ arrMoments = new ArrayList ();
 				ComputeMyProperties (dArea, dVolume, arrMoments);
 				m_dArea = dArea;
 		   }
@@ -114,11 +114,11 @@ namespace PESMLIB
 		double dArea = 0.0, dVolume = 0.0;
 		if (m_lFaceID != -1)
       {
-         ArrayList __gc *arrMoments = new ArrayList ();
+         ArrayList^ arrMoments = new ArrayList ();
          ComputeMyProperties (dArea, dVolume, arrMoments);
          if (arrMoments->Count > 0)
          {
-            Vector3d __gc *vecMoment = dynamic_cast<Vector3d __gc *> (arrMoments->get_Item (0));
+            Vector3d^ vecMoment = dynamic_cast<Vector3d^ > (arrMoments->get_Item (0));
             return new Vector3d (vecMoment->X / dArea, vecMoment->Y / dArea, vecMoment->Z / dArea);
          }
       }
@@ -127,7 +127,7 @@ namespace PESMLIB
 
 	Vector3d * BrepFaceProxy::GetNormal()
 	{
-		Vector3d __gc *v = new Vector3d(0, 0, 0);
+		Vector3d^ v = new Vector3d(0, 0, 0);
 		IwFace * pIwFace = GetIwFace();
 		if (pIwFace)
 		{
@@ -142,8 +142,8 @@ namespace PESMLIB
 		return v;
 	}
 	
-   void BrepFaceProxy::ComputeMyProperties (double __gc& dArea, double __gc& dVolume,
-      System::Collections::ArrayList __gc *arrMoments)
+   void BrepFaceProxy::ComputeMyProperties (double% dArea, double% dVolume,
+      System::Collections::ArrayList^ arrMoments)
    {
       try
       {
@@ -184,7 +184,7 @@ namespace PESMLIB
             }
          } // if (pIwFace)
 		}
-      catch (System::Exception __gc *e)
+      catch (System::Exception^ e)
       {
          Console::WriteLine (e->Message);
       }
@@ -195,7 +195,7 @@ namespace PESMLIB
 		double dArea = 0.0, dVolume = 0.0;
 		if (m_lFaceID != -1)
       {
-			ArrayList __gc *arrMoments = new ArrayList ();
+			ArrayList^ arrMoments = new ArrayList ();
 			ComputeProperties (dArea, dVolume, arrMoments);
 		}
       return dArea;
@@ -206,7 +206,7 @@ namespace PESMLIB
 		double dArea = 0.0, dVolume = 0.0;
 		if (m_lFaceID != -1)
       {
-         ArrayList __gc *arrMoments = new ArrayList ();
+         ArrayList^ arrMoments = new ArrayList ();
          ComputeProperties (dArea, dVolume, arrMoments);
       }
       return dVolume;
@@ -217,11 +217,11 @@ namespace PESMLIB
 		double dArea = 0.0, dVolume = 0.0;
 		if (m_lFaceID != -1)
       {
-         ArrayList __gc *arrMoments = new ArrayList ();
+         ArrayList^ arrMoments = new ArrayList ();
          ComputeProperties (dArea, dVolume, arrMoments);
          if (arrMoments->Count > 0)
          {
-            Vector3d __gc *vecMoment = dynamic_cast<Vector3d __gc *> (arrMoments->get_Item (0));
+            Vector3d^ vecMoment = dynamic_cast<Vector3d^ > (arrMoments->get_Item (0));
             return new Vector3d (vecMoment->X / dArea, vecMoment->Y / dArea, vecMoment->Z / dArea);
          }
       }
@@ -243,7 +243,7 @@ namespace PESMLIB
    //{
    //}
 
-	bool BrepFaceProxy::ComputeBoundingBox (HC::NL_POINT __gc * ptMin, HC::NL_POINT __gc * ptMax)
+	bool BrepFaceProxy::ComputeBoundingBox (HC::NL_POINT^  ptMin, HC::NL_POINT^  ptMax)
    {
       try
       {
@@ -311,7 +311,7 @@ namespace PESMLIB
             return true;
          }
       }
-      catch (System::Exception __gc *ex)
+      catch (System::Exception^ ex)
       {
          Console::WriteLine (ex->Message);
       }
@@ -330,12 +330,12 @@ namespace PESMLIB
          m_pBrep->UnHighlightFeature (keySeg, Brep::BrepFeatureType::Brep_Face, m_lFaceID);
    }
 
-   System::Object __gc * BrepFaceProxy::GetReferencableObject ()
+   System::Object^  BrepFaceProxy::GetReferencableObject ()
    {
       return m_pBrep;
    }
 
-   int BrepFaceProxy::CompareTo(System::Object __gc *obj)
+   int BrepFaceProxy::CompareTo(System::Object^ obj)
    {
       try
       {
@@ -379,7 +379,7 @@ namespace PESMLIB
 	  return 1;
    }
 
-   bool BrepFaceProxy::Equals (System::Object __gc * obj)
+   bool BrepFaceProxy::Equals (System::Object^  obj)
    {
       try
       {
@@ -397,10 +397,10 @@ namespace PESMLIB
       return false;
    }
 
-   System::Collections::ArrayList __gc * BrepFaceProxy::GetEdges()
+   System::Collections::ArrayList^  BrepFaceProxy::GetEdges()
    {
 
-	   System::Collections::ArrayList __gc * listEdgeProxies = new System::Collections::ArrayList();
+	   System::Collections::ArrayList^  listEdgeProxies = new System::Collections::ArrayList();
 	   IwFace * pIwFace = GetIwFace ();
 
       if (NULL != pIwFace)
@@ -443,7 +443,7 @@ namespace PESMLIB
 	   return pIwFace;
    }
 
-   bool BrepFaceProxy::IsDependentOn (IPersistentObject __gc *pObj)
+   bool BrepFaceProxy::IsDependentOn (IPersistentObject^ pObj)
    {
       try
       {
@@ -460,7 +460,7 @@ namespace PESMLIB
                   if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *newString = new System::String (pcElements);
+                     System::String^ newString = new System::String (pcElements);
                      if (newString->IndexOf (pObj->IdSelf) >= 0)
                         return true;
                   }
@@ -476,11 +476,11 @@ namespace PESMLIB
       return false;
    }
 
-   System::Collections::ArrayList __gc * BrepFaceProxy::GetObjectDependencies ()
+   System::Collections::ArrayList^  BrepFaceProxy::GetObjectDependencies ()
    {
       try
       {
-         System::Collections::ArrayList __gc *arrDependents = new System::Collections::ArrayList ();
+         System::Collections::ArrayList^ arrDependents = new System::Collections::ArrayList ();
 
          // First retrieve the Brep region from the owning brep.
 
@@ -495,7 +495,7 @@ namespace PESMLIB
                   if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *sAttribute = new System::String (pcElements);
+                     System::String^ sAttribute = new System::String (pcElements);
                      
                      // Parse the string of ObjIDs and obtain the objects from the brep
                     
@@ -506,7 +506,7 @@ namespace PESMLIB
                      for (int iTok = 0; iTok < sTokens->Count; iTok++)
                      {
 						 // Don't allow null objects to be added
-						 System::Object __gc *dependentObj = m_pBrep->GetDependency (sTokens[iTok]);
+						 System::Object^ dependentObj = m_pBrep->GetDependency (sTokens[iTok]);
 						 if (NULL != dependentObj)
 							arrDependents->Add (dependentObj);
                      }
@@ -525,7 +525,7 @@ namespace PESMLIB
       return NULL;
    }
 
-   void BrepFaceProxy::RemoveObjectDependency (IPersistentObject __gc *pIPersistentObject)
+   void BrepFaceProxy::RemoveObjectDependency (IPersistentObject^ pIPersistentObject)
    {
       try
       {
@@ -544,7 +544,7 @@ namespace PESMLIB
                   // If existing attribute type found, get the string and look for this ID and
                   // if found remove it.
 
-                  System::String __gc *sAttribute = new System::String (
+                  System::String^ sAttribute = new System::String (
                      pExistingAttribute->GetCharacterElementsAddress ());
                   int iObj = sAttribute->IndexOf (pIPersistentObject->IdSelf);
                   if (iObj >= 0) // object found so modify string to remove it
@@ -582,7 +582,7 @@ namespace PESMLIB
       }
    }
 
-   void BrepFaceProxy::AddObjectDependency (IPersistentObject __gc *pIPersistentObject)
+   void BrepFaceProxy::AddObjectDependency (IPersistentObject^ pIPersistentObject)
    {
       try
       {
@@ -593,7 +593,7 @@ namespace PESMLIB
             IwFace *pIwFace = GetIwFace ();
             if (NULL != pIwFace)
             {
-               System::String __gc *sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
+               System::String^ sNewAttribute = System::String::Copy (pIPersistentObject->IdSelf);
 
                IwAttribute *pExistingAttribute = pIwFace->FindAttribute (AttributeID_IDOBJ);
                if (NULL != pExistingAttribute)
@@ -601,7 +601,7 @@ namespace PESMLIB
                   // If existing attribute found, get the string and look for this ID. 
                   // Don't add the ID again if it already exists.
 
-                  System::String __gc *sAttribute = new System::String (
+                  System::String^ sAttribute = new System::String (
                      pExistingAttribute->GetCharacterElementsAddress ());
                   int iObj = sAttribute->IndexOf (pIPersistentObject->IdSelf);
                   if (iObj < 0) // object not found so add it
@@ -641,7 +641,7 @@ namespace PESMLIB
       }
    }
 
-   void BrepFaceProxy::SetAttribute (AttributeID ulAttributeID, System::Object __gc *oAttrib, 
+   void BrepFaceProxy::SetAttribute (AttributeID ulAttributeID, System::Object^ oAttrib, 
       AttributeBehavior behavior)
    {
       try
@@ -720,7 +720,7 @@ namespace PESMLIB
       }
    }
 
-   System::Object __gc * BrepFaceProxy::FindAttribute (AttributeID ulAttributeID)
+   System::Object^  BrepFaceProxy::FindAttribute (AttributeID ulAttributeID)
    {
       try
       {
@@ -736,7 +736,7 @@ namespace PESMLIB
                {
                   if (pAttribute->GetNumLongElements () > 0)
                   {
-                     System::Int32 __gc *newLong = new System::Int32();
+                     System::Int32^ newLong = new System::Int32();
                      const long *plElements = pAttribute->GetLongElementsAddress ();
                      *newLong = plElements[0];
                      return __box(*newLong);
@@ -744,13 +744,13 @@ namespace PESMLIB
                   else if (pAttribute->GetNumCharacterElements () > 0)
                   {
                      const char *pcElements = pAttribute->GetCharacterElementsAddress ();
-                     System::String __gc *newString = new System::String (pcElements);
+                     System::String^ newString = new System::String (pcElements);
                      return newString;
                   }
                   else if (pAttribute->GetNumDoubleElements () > 0)
                   {
                      const double *pdElements = pAttribute->GetDoubleElementsAddress ();
-                     System::Double __gc *newDouble = new System::Double ();
+                     System::Double^ newDouble = new System::Double ();
                      *newDouble = pdElements[0];
                      return __box (*newDouble);
                   }
@@ -799,7 +799,7 @@ namespace PESMLIB
                // should not destroy the IwSurface object in its destructor and should
                // be tied to the surface through a surfaceId attribute.
 
-   System::Object __gc * BrepFaceProxy::GetSurface ()
+   System::Object^  BrepFaceProxy::GetSurface ()
    {
       try
       {
@@ -811,13 +811,13 @@ namespace PESMLIB
             {
                if (pSurface->IsKindOf (IwPlane_TYPE))
                {
-                  Plane __gc *newPlane = new Plane (m_pContext, NULL);
+                  Plane^ newPlane = new Plane (m_pContext, NULL);
                   newPlane->AttachIwObj (m_pContext, pSurface);
                   return newPlane;
                }
                else if (pSurface->IsKindOf (IwBSplineSurface_TYPE))
                {
-                  NurbsSurface __gc *newSurface = new NurbsSurface (m_pContext, NULL);
+                  NurbsSurface^ newSurface = new NurbsSurface (m_pContext, NULL);
                   newSurface->AttachIwObj (m_pContext, pSurface);
                   return newSurface;
                }
@@ -831,7 +831,7 @@ namespace PESMLIB
       return NULL;
    }
 */
-   System::Object __gc * BrepFaceProxy::GetSurfaceCopy ()
+   System::Object^  BrepFaceProxy::GetSurfaceCopy ()
    {
       try
       {
@@ -843,7 +843,7 @@ namespace PESMLIB
             {
                if (pSurface->IsKindOf (IwPlane_TYPE))
                {
-                  Plane __gc *newPlane = new Plane (m_pContext, NULL);
+                  Plane^ newPlane = new Plane (m_pContext, NULL);
                   IwPlane *pPlane = NULL;
                   pSurface->Copy (m_pContext->GetIwContext (), (IwSurface *&) pPlane);
                   newPlane->AttachIwObj (m_pContext, pPlane);
@@ -851,7 +851,7 @@ namespace PESMLIB
                }
                else if (pSurface->IsKindOf (IwBSplineSurface_TYPE))
                {
-                  NurbsSurface __gc *newSurface = new NurbsSurface (m_pContext, NULL);
+                  NurbsSurface^ newSurface = new NurbsSurface (m_pContext, NULL);
                   IwBSplineSurface *pNurbsSurface = NULL;
                   pSurface->Copy (m_pContext->GetIwContext (), (IwSurface *&) pNurbsSurface);
                   newSurface->AttachIwObj (m_pContext, pNurbsSurface);
@@ -867,7 +867,7 @@ namespace PESMLIB
       return NULL;
    }
 
-   bool BrepFaceProxy::HasSameSurface (BrepFaceProxy __gc *srcFace)
+   bool BrepFaceProxy::HasSameSurface (BrepFaceProxy^ srcFace)
    {
       try
       {
@@ -890,11 +890,11 @@ namespace PESMLIB
       return false;
    }
 
-   System::Collections::ArrayList __gc * BrepFaceProxy::GetRegions ()
+   System::Collections::ArrayList^  BrepFaceProxy::GetRegions ()
    {
       try
       {
-         System::Collections::ArrayList __gc *arrRegions = new System::Collections::ArrayList ();
+         System::Collections::ArrayList^ arrRegions = new System::Collections::ArrayList ();
          IwFaceuse *pFaceuse[2];
          IwFace *pFace = GetIwFace ();
          if (pFace)
@@ -914,7 +914,7 @@ namespace PESMLIB
                         if (pRegionAttribute && pRegionAttribute->GetNumLongElements () > 0)
                         {
                            const long *lRegionIDs = pRegionAttribute->GetLongElementsAddress ();
-                           BrepRegionProxy __gc *regionProxy = new BrepRegionProxy (m_pContext, m_pBrep, lRegionIDs[0]);
+                           BrepRegionProxy^ regionProxy = new BrepRegionProxy (m_pContext, m_pBrep, lRegionIDs[0]);
                            arrRegions->Add (regionProxy);
                         }
                      }
@@ -931,7 +931,7 @@ namespace PESMLIB
       }
       return NULL;
    }
-	void BrepFaceProxy::AssignPropertyAttribute (String __gc *sName)
+	void BrepFaceProxy::AssignPropertyAttribute (String^ sName)
 	{
 		IwFace * pIwFace=GetIwFace ();
 		if (pIwFace)
@@ -959,7 +959,7 @@ namespace PESMLIB
 		}
 	}
 
-	Vector3d __gc * BrepFaceProxy::DropPoint(Vector3d __gc *ptToDrop, Vector3d __gc *vecNormal)
+	Vector3d^  BrepFaceProxy::DropPoint(Vector3d^ ptToDrop, Vector3d^ vecNormal)
 	{
 		IwFace * pIwFace = this->GetIwFace();
 		IwSurface * pIwSurface = pIwFace->GetSurface();
@@ -989,7 +989,7 @@ namespace PESMLIB
 			return new Vector3d(ptToDrop->X, ptToDrop->Y, ptToDrop->Z);
 	}
 
-	Vector3d __gc * BrepFaceProxy::DropPointAlongLine(Vector3d __gc *ptToDrop, Vector3d __gc *vecDropDirection, Vector3d __gc *vecNormal)
+	Vector3d^  BrepFaceProxy::DropPointAlongLine(Vector3d^ ptToDrop, Vector3d^ vecDropDirection, Vector3d^ vecNormal)
 	{
 		IwFace * pIwFace = this->GetIwFace();
 		IwSurface * pIwSurface = pIwFace->GetSurface();

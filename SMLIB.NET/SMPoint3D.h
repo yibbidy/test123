@@ -4,7 +4,7 @@
 
 namespace PESMLIB
 {
-	__gc public class Point3d : public Vector3d, public IPersistentObject
+	public ref class Point3d : public Vector3d, public IPersistentObject
 	{
 	//public:
 	//	Point3d(void);
